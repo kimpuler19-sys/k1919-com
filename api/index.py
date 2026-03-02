@@ -27,5 +27,5 @@ def get_services():
     return [
         {"id": 1, "name": "Full Solution Dev", "price": "$5000"},
         {"id": 2, "name": "DBA & Optimization", "price": "$150/hr"},
-        {"id": 3, "name": "Live Host Commerce", "price": "$100/hr"}
+        {"id": 3, "name": "Live Host Commerce", "price": "$111/hr"}
     ]
