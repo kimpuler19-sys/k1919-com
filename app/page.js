@@ -5,7 +5,6 @@ export default function Home() {
   const [services, setServices] = useState([])
 
   useEffect(() => {
-    // Fetching data from Python FastAPI backend
     fetch('/api/services')
       .then(res => res.json())
       .then(json => setServices(json))
@@ -13,26 +12,24 @@ export default function Home() {
   }, [])
 
   const handlePaypal = (amount) => {
-    // Fixed: Properly redirect to PayPal Me Kimpuler
+    // FIXED LINK LOGIC
     window.open(`https://www.paypal.com{amount}`, '_blank')
   }
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
-      {/* Background Glow Effects */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[120px] rounded-full"></div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-20">
-        {/* Navigation */}
         <nav className="flex justify-between items-center mb-24">
           <div className="text-3xl font-black tracking-tighter text-white">Kimpuler<span className="text-purple-500"> Design</span></div>
           <div className="flex gap-6 items-center">
             <span className="hidden md:inline text-xs text-slate-500 font-mono italic">STATUS: OPEN FOR PROJECTS</span>
             <a 
-              href="https://wa.me/6283841632837" 
+              href="https://wa.me" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition"
@@ -42,7 +39,6 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* Hero Section */}
         <header className="max-w-4xl mb-32">
           <h1 className="text-6xl md:text-8xl font-black text-white leading-none mb-8 tracking-tight">
             Next-Gen <br/>Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Architect.</span>
@@ -52,7 +48,6 @@ export default function Home() {
           </p>
         </header>
 
-        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s, i) => (
             <div key={i} className="group p-8 bg-slate-900/40 border border-white/5 rounded-3xl hover:border-purple-500/50 transition-all flex flex-col justify-between">
@@ -78,14 +73,13 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Footer */}
         <footer className="mt-40 py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-500 text-sm font-mono">
           <p>© 2026 KIMPULER.COM — BASED IN INDONESIA, SERVING GLOBALLY</p>
           <div className="flex gap-8">
-            {/* <a href="https://github.com" target="_blank" className="hover:text-white transition">GITHUB</a>
-            <a href="https://linkedin.com" target="_blank" className="hover:text-white transition">LINKEDIN</a>
-            <a href="https://upwork.com" target="_blank" className="hover:text-white transition">UPWORK</a> */}
-          </div>
+            {/* <a href="https://github.com" target="_blank" className="hover:text-white transition font-bold">GITHUB</a>
+            <a href="https://linkedin.com" target="_blank" className="hover:text-white transition font-bold">LINKEDIN</a>
+            <a href="https://upwork.com" target="_blank" className="hover:text-white transition font-bold text-emerald-400">UPWORK</a>*/}
+          </div> 
         </footer>
       </div>
     </div>
