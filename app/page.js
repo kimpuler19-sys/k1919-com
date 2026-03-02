@@ -72,6 +72,7 @@ export default function Home() {
             <a href="#" className="hover:text-white transition">GITHUB</a>
             <a href="#" className="hover:text-white transition">LINKEDIN</a>
             <a href="#" className="hover:text-white transition">UPWORK</a>
+            ?
           </div>
         </footer>
       </div>
