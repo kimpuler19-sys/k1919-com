@@ -25,10 +25,10 @@ export default function Home() {
 
       <div className="max-w-6xl mx-auto px-6 py-20">
         <nav className="flex justify-between items-center mb-24">
-          <div className="text-3xl font-black tracking-tighter text-white">K1919<span className="text-purple-500">.COM</span></div>
+          <div className="text-3xl font-black tracking-tighter text-white">Kimpuler<span className="text-purple-500"> Design</span></div>
           <div className="flex gap-6 items-center">
             <span className="text-xs text-slate-500 font-mono">STATUS: OPEN FOR PROJECTS</span>
-            <a href="https://wa.me" className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition">WHATSAPP</a>
+            <a href="https://wa.me/6283841632837" className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition">WHATSAPP</a>
           </div>
         </nav>
 
