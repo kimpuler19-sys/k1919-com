@@ -85,7 +85,7 @@ export default function Home() {
           <div className="flex gap-6 items-center text-[10px]">
             <span className="hidden md:inline text-slate-500 tracking-widest uppercase animate-pulse">● Systems Online & Ready</span>
             <a 
-              href="https://wa.me" 
+              href="https://wa.me/6283841632837" 
               target="_blank" 
               className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest"
             >
