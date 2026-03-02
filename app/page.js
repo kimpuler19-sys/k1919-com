@@ -41,32 +41,42 @@ export default function Home() {
   const handlePayment = (e) => {
     e.preventDefault()
     
-    // Validasi Captcha Sederhana
+    // 1. Validasi Captcha
     if (parseInt(formData.captcha) !== captchaValue + 5) {
       alert("Security Check Failed! Please calculate correctly.")
       return
     }
 
-    // KONFIGURASI PAYPAL BUSINESS URL
+    // 2. Data Konfigurasi
     const paypalEmail = "jokonardi@gmail.com";
-    
-    // Menggabungkan semua data form ke dalam catatan Order
     const orderNote = `Order: ${selectedService.title} | Client: ${formData.name} | WA: ${formData.phone} | Email: ${formData.email} | Project: ${formData.desc}`;
     
-    // Encode agar aman dalam URL
-    const encodedNote = encodeURIComponent(orderNote);
-    const amount = selectedService.paypal_val;
+    // 3. Pembuatan URL yang Benar (Fixed URL)
+    const baseUrl = "https://www.paypal.com";
+    const params = new URLSearchParams({
+      cmd: "_xclick",
+      business: paypalEmail,
+      item_name: orderNote,
+      amount: selectedService.paypal_val,
+      currency_code: "USD"
+    });
 
-    // Link PayPal Business (Data masuk ke bagian 'Item Name' di notifikasi email Anda)
-    const finalUrl = "https://www.paypal.com" + paypalEmail + "&item_name=" + encodedNote + "&amount=" + amount + "&currency_code=USD";
+    const finalUrl = `${baseUrl}?${params.toString()}`;
     
-    // Langkah 2: Redirect ke PayPal
-    window.open(finalUrl, '_blank')
+    // 4. Eksekusi Buka Window
+    try {
+      window.open(finalUrl, '_blank');
+    } catch (err) {
+      console.error("Gagal membuka PayPal:", err);
+      // Fallback jika window.open diblokir browser
+      window.location.href = finalUrl;
+    }
     
-    // Reset & Close Modal
-    setShowModal(false)
-    setFormData({ name: '', email: '', phone: '', desc: '', captcha: '' })
+    // Reset & Close
+    setShowModal(false);
+    setFormData({ name: '', email: '', phone: '', desc: '', captcha: '' });
   }
+
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
