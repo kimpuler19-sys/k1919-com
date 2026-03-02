@@ -12,10 +12,13 @@ export default function Home() {
   }, [])
 
   const handlePaypal = (amount) => {
-    // FIXED LINK LOGIC
-    window.open(`https://www.paypal.com{amount}`, '_blank')
+    // Cara manual paling aman tanpa backtick
+    const baseUrl = "https://www.paypal.com";
+    const finalUrl = baseUrl + amount;
+    window.open(finalUrl, '_blank');
   }
-  
+
+
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
