@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex gap-6 items-center">
             <span className="hidden md:inline text-xs text-slate-500 font-mono italic">STATUS: OPEN FOR PROJECTS</span>
             <a 
-              href="https://wa.me" 
+              href="https://wa.me/6283841632837" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/10 transition"
