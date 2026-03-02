@@ -2,6 +2,12 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
+
+@app.get("/api/")
+def read_root():
+    return {"status": "Kimpuler API is Online"}
+
 @app.get("/api/hello")
 def hello_kimpuler():
     return {"message": "Welcome to Kimpuler Agency API (Python Powered!)"}
@@ -14,10 +20,4 @@ def get_services():
         {"id": 3, "name": "Live Host Commerce", "price": "$100/hr"}
     ]
 
-
-
-
-@app.get("/api/")
-def read_root():
-    return {"status": "Kimpuler API is Online"}
 
