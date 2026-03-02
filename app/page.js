@@ -13,7 +13,7 @@ export default function Home() {
 
   const handlePaypal = (amount) => {
     // Cara manual paling aman tanpa backtick
-    const baseUrl = "https://www.paypal.com";
+    const baseUrl = "https://paypal.me/kimpuler/";
     const finalUrl = baseUrl + amount;
     window.open(finalUrl, '_blank');
   }
