@@ -15,6 +15,7 @@ export default function Home() {
     // FIXED LINK LOGIC
     window.open(`https://www.paypal.com{amount}`, '_blank')
   }
+  
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
