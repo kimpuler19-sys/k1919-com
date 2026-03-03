@@ -104,13 +104,13 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* Hero Branding Section */}
-        <header className="max-w-5xl mb-40">
-          <h1 className="text-6xl md:text-9xl font-black text-white leading-[0.85] mb-10 tracking-tighter uppercase">
-            Digital <br/>Excellence. <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 italic">Engineered.</span>
+          {/* HERO SECTION TERBARU */}
+          <header className="max-w-5xl mb-40">
+          <h1 className="text-6xl md:text-9xl font-black text-white leading-[0.85] mb-12 tracking-tighter uppercase">
+            High-Performance <br/>Infrastructure. <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 italic">Scaled for the Future.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light italic">
-            Providing high-performance **PHP Systems**, **DBA Operations**, and **Solana Blockchain Infrastructure** for global brands.
+            Architecting resilient **PHP Ecosystems**, **Advanced DBA Operations**, and **Solana Blockchain Solutions** for global market leaders.
           </p>
         </header>
 
