@@ -7,26 +7,26 @@ def get_services():
     return [
         {
             "title": "Elite Web Systems", 
-            "price": "150", 
-            "paypal_val": "150",
+            "price": "250", 
+            "paypal_val": "250",
             "desc": "Custom PHP/Next.js Architecture. Full-cycle development engineered for performance and global scale."
         },
         {
             "title": "Advanced DBA Ops", 
-            "price": "75", 
-            "paypal_val": "75",
+            "price": "275", 
+            "paypal_val": "275",
             "desc": "SQL Performance tuning, database hardening, and architectural audits for high-traffic environments."
         },
         {
             "title": "Live Commerce Growth", 
-            "price": "50", 
-            "paypal_val": "50",
+            "price": "150", 
+            "paypal_val": "150",
             "desc": "Professional high-conversion live hosting for TikTok & Shopee. Bridging technology and sales."
         },
         {
             "title": "Crypto Engineering", 
-            "price": "500", 
-            "paypal_val": "500",
+            "price": "1500", 
+            "paypal_val": "1500",
             "desc": "Technical consulting for crypto programming, smart contract audits, and dApp architecture."
         },
         {
