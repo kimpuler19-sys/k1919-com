@@ -120,6 +120,7 @@ export default function Home() {
         <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
   <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
   <div className="flex gap-6 items-center">
+    <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
     <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
     <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
     <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
@@ -241,9 +242,11 @@ export default function Home() {
   <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
   <div className="flex gap-10">
     <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
+    <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
     <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
     <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
     <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+    
     <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
   </div>
 </footer>
