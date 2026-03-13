@@ -103,6 +103,20 @@ export default function Home() {
     return Math.round(((original - current) / original) * 100)
   }
 
+  // Fungsi untuk menentukan warna border berdasarkan kategori
+  const getCategoryBorder = (title) => {
+    const t = title.toLowerCase();
+    if (t.includes("php")) return "border-orange-700";
+    if (t.includes("python") || t.includes("machine learning") || t.includes("data engineering") || t.includes("data science") || t.includes("ai & llm")) return "border-blue-500";
+    if (t.includes("solana")) return "border-purple-400";
+    if (t.includes("dba")) return "border-red-500";
+    if (t.includes("retainer")) return "border-yellow-600";
+    if (t.includes("web systems") || t.includes("full-stack") || t.includes("elite web") || t.includes("next.js") || t.includes("vue")) return "border-cyan-500";
+    if (t.includes("ai feature") || t.includes("aio") || t.includes("ai-friendly")) return "border-green-500";
+    if (t.includes("maintenance")) return "border-pink-500";
+    return "border-white/5";
+  }
+
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -165,30 +179,20 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map((s, i) => {
               const isRecommended = s.original_price >= 2000
-              const isPHP = s.title.includes("PHP") || s.title.includes("🐘") // deteksi layanan PHP
               const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
               const shortBenefit = getShortBenefit(s.title)
-              
-              // Tentukan background dan border berdasarkan jenis
-              let bgGradient = '';
-              let borderColor = '';
-              if (isPHP) {
-                bgGradient = 'bg-gradient-to-br from-amber-900/30 to-slate-900/40'; // warna khas PHP
-                borderColor = 'border-amber-500 hover:border-amber-400';
-              } else if (isRecommended) {
-                bgGradient = 'bg-gradient-to-br from-purple-900/40 to-slate-900/60';
-                borderColor = 'border-purple-500';
-              } else {
-                bgGradient = 'bg-slate-900/30';
-                borderColor = 'border-white/5 hover:border-purple-500/30';
-              }
-              
+              const borderColorClass = isRecommended ? 'border-purple-500' : getCategoryBorder(s.title)
+              const baseClasses = "group p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col justify-between"
+              const recommendedClasses = isRecommended 
+                ? "bg-gradient-to-br from-purple-900/40 to-slate-900/60 shadow-2xl scale-[1.02] z-10" 
+                : "bg-slate-900/30"
+              const finalClasses = `${baseClasses} ${recommendedClasses} ${borderColorClass}`
               return (
-                <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${bgGradient} ${borderColor} ${isRecommended ? 'shadow-2xl scale-[1.02] z-10' : ''}`}>
+                <div key={i} className={finalClasses}>
                   <div className="text-left">
                     <div className="flex justify-between items-center mb-4">
-                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${ isPHP ? 'bg-amber-500 text-white' : isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400' }`}>
-                        {isPHP ? '🐘 PHP SOLUTION' : (isRecommended ? '★ 2026 PRO' : 'ESSENTIAL')}
+                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
+                        {isRecommended ? '★ 2026 PRO' : 'ESSENTIAL'}
                       </span>
                       <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                     </div>
@@ -209,7 +213,7 @@ export default function Home() {
                         )}
                       </div>
                     </div>
-                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${ isPHP ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-xl' : isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20' }`}>
+                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
                       {s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
                     </button>
                   </div>
