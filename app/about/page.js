@@ -28,7 +28,7 @@ export default function About() {
 
           <h2 className="text-3xl font-bold text-white mt-12 mb-4">Our Journey</h2>
           <p className="text-slate-300">
-            We started as freelance developers on platforms like Fiverr and Upwork, delivering quality code for clients worldwide. 
+            We started as freelance developers 2011 Online Work, delivering quality code for clients worldwide. 
             Over time, we realized that the most impactful work comes from long-term partnerships, not one-off transactions. 
             That's why we transitioned to direct projects, focusing on becoming an integral part of our clients' teams—understanding 
             their business goals, challenges, and growth trajectories.
