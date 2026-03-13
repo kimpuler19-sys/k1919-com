@@ -11,7 +11,6 @@ export default function Home() {
   const [captchaValue, setCaptchaValue] = useState(0)
 
   useEffect(() => {
-    // Ambil data dari API
     fetch('/api/services')
       .then(res => res.json())
       .then(json => setServices(json))
@@ -21,32 +20,31 @@ export default function Home() {
 
   const handleAction = (s) => {
     if (s.original_price >= 1000) {
-      const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`);
-      window.open(`https://wa.me/6283841632837?text=${message}`, '_blank');
+      const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`)
+      window.open(`https://wa.me/6283841632837?text=${message}`, '_blank')
     } else {
-      setSelectedService(s);
-      setShowModal(true);
+      setSelectedService(s)
+      setShowModal(true)
     }
   }
 
   const handlePayment = (e) => {
     e.preventDefault()
     if (parseInt(formData.captcha) !== captchaValue + 5) { alert("Security Check Failed!"); return }
-    const paypalEmail = "jokonardi@gmail.com";
-    const orderNote = `Order: ${selectedService.title} | Client: ${formData.name} | WA: ${formData.phone} | Email: ${formData.email} | Project: ${formData.desc}`;
-    const baseUrl = "https://www.paypal.com/cgi-bin/webscr";
+    const paypalEmail = "jokonardi@gmail.com"
+    const orderNote = `Order: ${selectedService.title} | Client: ${formData.name} | WA: ${formData.phone} | Email: ${formData.email} | Project: ${formData.desc}`
+    const baseUrl = "https://www.paypal.com/cgi-bin/webscr"
     const params = new URLSearchParams({
       cmd: "_xclick",
       business: paypalEmail,
       item_name: orderNote.substring(0, 120),
       amount: selectedService.paypal_val,
       currency_code: "USD",
-    });
+    })
     window.open(`${baseUrl}?${params.toString()}`, '_blank')
     setShowModal(false)
   }
 
-  // Data studi kasus statis
   const caseStudies = [
     {
       title: "E-commerce Speed Boost",
@@ -75,34 +73,34 @@ export default function Home() {
   ]
 
   const getShortBenefit = (title) => {
-    if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models.";
-    if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems.";
-    if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights.";
-    if (title.includes("Machine Learning")) return "Predict outcomes before they happen.";
-    if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks.";
-    if (title.includes("API Development")) return "Connect your entire software ecosystem seamlessly.";
-    if (title.includes("Data Science")) return "Interactive dashboards that drive decisions.";
-    if (title.includes("Performance Optimization")) return "Make your Python code 10x faster, cut cloud costs.";
-    if (title.includes("Maintenance")) return "Sleep better at night – your site is always safe and fast.";
-    if (title.includes("Speed")) return "Convert more visitors with lightning-fast pages.";
-    if (title.includes("Full-Stack")) return "Get a scalable app built with modern tech, ready for growth.";
-    if (title.includes("Low-Code")) return "Launch internal tools in weeks, not months.";
-    if (title.includes("AI Feature")) return "Engage users with smart, personalized experiences.";
-    if (title.includes("AIO")) return "Be found by ChatGPT and other AI search engines.";
-    if (title.includes("Elite Web")) return "Sub-second loading, edge-deployed, future-proof.";
-    if (title.includes("Developer Time")) return "Dedicated hours to tackle your most complex tasks.";
-    if (title.includes("DBA")) return "Make your database bulletproof and blazing fast.";
-    if (title.includes("Trial")) return "Test our skills risk-free on a small project.";
-    if (title.includes("Retainer")) return "A true technical partner, always on your side.";
-    if (title.includes("Solana")) return "Enterprise-grade blockchain solutions.";
-    if (title.includes("Weekly PHP Maintenance")) return "Keep your PHP application fresh and secure with weekly dedicated hours.";
-    if (title.includes("Custom PHP Dashboard")) return "Get a fully functional dashboard with server, backed by 1 year of support.";
-    return "Tailored solution for your business needs.";
+    if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models."
+    if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems."
+    if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights."
+    if (title.includes("Machine Learning")) return "Predict outcomes before they happen."
+    if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks."
+    if (title.includes("API Development")) return "Connect your entire software ecosystem seamlessly."
+    if (title.includes("Data Science")) return "Interactive dashboards that drive decisions."
+    if (title.includes("Performance Optimization")) return "Make your Python code 10x faster, cut cloud costs."
+    if (title.includes("Maintenance")) return "Sleep better at night – your site is always safe and fast."
+    if (title.includes("Speed")) return "Convert more visitors with lightning-fast pages."
+    if (title.includes("Full-Stack")) return "Get a scalable app built with modern tech, ready for growth."
+    if (title.includes("Low-Code")) return "Launch internal tools in weeks, not months."
+    if (title.includes("AI Feature")) return "Engage users with smart, personalized experiences."
+    if (title.includes("AIO")) return "Be found by ChatGPT and other AI search engines."
+    if (title.includes("Elite Web")) return "Sub-second loading, edge-deployed, future-proof."
+    if (title.includes("Developer Time")) return "Dedicated hours to tackle your most complex tasks."
+    if (title.includes("DBA")) return "Make your database bulletproof and blazing fast."
+    if (title.includes("Trial")) return "Test our skills risk-free on a small project."
+    if (title.includes("Retainer")) return "A true technical partner, always on your side."
+    if (title.includes("Solana")) return "Enterprise-grade blockchain solutions."
+    if (title.includes("Weekly PHP Maintenance")) return "Keep your PHP application fresh and secure with weekly dedicated hours."
+    if (title.includes("Custom PHP Dashboard")) return "Get a fully functional dashboard with server, backed by 1 year of support."
+    return "Tailored solution for your business needs."
   }
 
   const calculateDiscountPercent = (original, current) => {
-    if (!original || original <= current) return null;
-    return Math.round(((original - current) / original) * 100);
+    if (!original || original <= current) return null
+    return Math.round(((original - current) / original) * 100)
   }
 
   return (
@@ -166,15 +164,31 @@ export default function Home() {
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Solutions for <span className="text-purple-500">2026 & Beyond</span></h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map((s, i) => {
-              const isRecommended = s.original_price >= 2000;
-              const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null;
-              const shortBenefit = getShortBenefit(s.title);
+              const isRecommended = s.original_price >= 2000
+              const isPHP = s.title.includes("PHP") || s.title.includes("🐘") // deteksi layanan PHP
+              const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
+              const shortBenefit = getShortBenefit(s.title)
+              
+              // Tentukan background dan border berdasarkan jenis
+              let bgGradient = '';
+              let borderColor = '';
+              if (isPHP) {
+                bgGradient = 'bg-gradient-to-br from-amber-900/30 to-slate-900/40'; // warna khas PHP
+                borderColor = 'border-amber-500 hover:border-amber-400';
+              } else if (isRecommended) {
+                bgGradient = 'bg-gradient-to-br from-purple-900/40 to-slate-900/60';
+                borderColor = 'border-purple-500';
+              } else {
+                bgGradient = 'bg-slate-900/30';
+                borderColor = 'border-white/5 hover:border-purple-500/30';
+              }
+              
               return (
-                <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${isRecommended ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 border-purple-500 shadow-2xl scale-[1.02] z-10' : 'bg-slate-900/30 border-white/5 hover:border-purple-500/30'}`}>
+                <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${bgGradient} ${borderColor} ${isRecommended ? 'shadow-2xl scale-[1.02] z-10' : ''}`}>
                   <div className="text-left">
                     <div className="flex justify-between items-center mb-4">
-                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
-                        {isRecommended ? '★ 2026 PRO' : 'ESSENTIAL'}
+                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${ isPHP ? 'bg-amber-500 text-white' : isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400' }`}>
+                        {isPHP ? '🐘 PHP SOLUTION' : (isRecommended ? '★ 2026 PRO' : 'ESSENTIAL')}
                       </span>
                       <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                     </div>
@@ -195,12 +209,12 @@ export default function Home() {
                         )}
                       </div>
                     </div>
-                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${ isPHP ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-xl' : isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20' }`}>
                       {s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
                     </button>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </section>
