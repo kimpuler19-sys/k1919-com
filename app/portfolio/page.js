@@ -2,6 +2,7 @@
 import Link from 'next/link'
 
 const caseStudies = [
+  // === EXISTING PROJECTS (20) ===
   // 1. PHP Web Development (Privates) - 2011
   {
     id: 1,
@@ -281,6 +282,147 @@ const caseStudies = [
       "Monitoring and observability with Prometheus + Grafana"
     ],
     tech: ["Next.js 15", "FastAPI", "PostgreSQL", "Docker", "Kubernetes", "Redis"]
+  },
+  // === NEW PROJECTS (2016-2025) - 10 additional ===
+  // 21. 2016 - E-commerce Integration
+  {
+    id: 21,
+    title: "E-commerce Integration (Privates)",
+    year: "2016",
+    category: "E-commerce",
+    points: [
+      "Integrated payment gateway and inventory sync for an e-commerce platform",
+      "Developed custom shipping calculator with real-time rates",
+      "Implemented order management dashboard for admin",
+      "Optimized database for 10,000+ products"
+    ],
+    tech: ["PHP 5.6", "Laravel 5.2", "MySQL", "jQuery"]
+  },
+  // 22. 2017 - Real Estate Platform
+  {
+    id: 22,
+    title: "Real Estate Platform (Privates)",
+    year: "2017",
+    category: "Real Estate",
+    points: [
+      "Built property listing website with advanced search filters",
+      "Integrated map-based search using Google Maps API",
+      "Developed agent dashboard for listing management",
+      "Implemented lead capture and CRM integration"
+    ],
+    tech: ["PHP 7", "Laravel 5.4", "MySQL", "Google Maps API", "Bootstrap"]
+  },
+  // 23. 2018 - API Development for Mobile App
+  {
+    id: 23,
+    title: "API Development for Mobile App (Privates)",
+    year: "2018",
+    category: "API Development",
+    points: [
+      "Designed and built RESTful API for a social networking app",
+      "Implemented JWT authentication and rate limiting",
+      "Created real-time notifications using WebSocket",
+      "Optimized API response time with caching (Redis)"
+    ],
+    tech: ["PHP 7.2", "Lumen", "MySQL", "Redis", "WebSocket"]
+  },
+  // 24. 2019 - Mobile App Backend
+  {
+    id: 24,
+    title: "Mobile App Backend (Privates)",
+    year: "2019",
+    category: "Backend Development",
+    points: [
+      "Developed backend for a fitness tracking app with user profiles",
+      "Integrated third-party APIs for step tracking and nutrition data",
+      "Built analytics dashboard for user engagement",
+      "Implemented push notifications via Firebase"
+    ],
+    tech: ["PHP 7.3", "Laravel 6", "MySQL", "Firebase", "Redis"]
+  },
+  // 25. 2020 - DeFi Dashboard
+  {
+    id: 25,
+    title: "DeFi Dashboard (Privates)",
+    year: "2020",
+    category: "DeFi",
+    points: [
+      "Created dashboard for tracking DeFi portfolio across multiple chains",
+      "Integrated with Ethereum and Solana RPC endpoints",
+      "Developed real-time price charts using WebSocket",
+      "Implemented wallet connection (MetaMask, Phantom)"
+    ],
+    tech: ["Node.js", "React", "Ethers.js", "Solana Web3.js", "Chart.js"]
+  },
+  // 26. 2021 - NFT Marketplace
+  {
+    id: 26,
+    title: "NFT Marketplace (Privates)",
+    year: "2021",
+    category: "NFT",
+    points: [
+      "Built NFT minting and marketplace platform on Solana",
+      "Integrated Metaplex protocol for NFT creation",
+      "Developed frontend with React and Tailwind CSS",
+      "Implemented auction and fixed-price listing features"
+    ],
+    tech: ["React", "Next.js", "Solana Web3.js", "Metaplex", "Tailwind"]
+  },
+  // 27. 2022 - Supply Chain Tracking
+  {
+    id: 27,
+    title: "Supply Chain Tracking (Privates)",
+    year: "2022",
+    category: "Blockchain",
+    points: [
+      "Developed blockchain-based supply chain tracking system",
+      "Created smart contracts for product provenance (Solidity)",
+      "Built dashboard for stakeholders to trace items",
+      "Integrated QR code scanning for easy tracking"
+    ],
+    tech: ["Ethereum", "Solidity", "React", "Node.js", "IPFS"]
+  },
+  // 28. 2023 - Healthcare Management System
+  {
+    id: 28,
+    title: "Healthcare Management System (Privates)",
+    year: "2023",
+    category: "Healthcare",
+    points: [
+      "Built comprehensive HMS with patient records, appointments, billing",
+      "Implemented role-based access for doctors, nurses, admins",
+      "Integrated telemedicine module with video calls (WebRTC)",
+      "Ensured HIPAA compliance with data encryption"
+    ],
+    tech: ["PHP 8.1", "Laravel 10", "MySQL", "WebRTC", "AES encryption"]
+  },
+  // 29. 2024 - AI Content Generator
+  {
+    id: 29,
+    title: "AI Content Generator (Privates)",
+    year: "2024",
+    category: "AI SaaS",
+    points: [
+      "Developed AI-powered content generation tool using GPT-4",
+      "Built subscription-based SaaS with Stripe integration",
+      "Created user-friendly editor for content customization",
+      "Implemented usage tracking and rate limiting"
+    ],
+    tech: ["Python 3.11", "FastAPI", "React", "OpenAI API", "Stripe"]
+  },
+  // 30. 2025 - IoT Data Platform
+  {
+    id: 30,
+    title: "IoT Data Platform (Privates)",
+    year: "2025",
+    category: "IoT",
+    points: [
+      "Built platform to ingest and visualize IoT sensor data",
+      "Implemented MQTT broker for real-time data streaming",
+      "Developed dashboards with time-series charts",
+      "Integrated anomaly detection using machine learning"
+    ],
+    tech: ["Node.js", "InfluxDB", "Grafana", "MQTT", "Python"]
   }
 ]
 
@@ -300,7 +442,7 @@ export default function Portfolio() {
 
         <header className="mb-16">
           <h1 className="text-5xl font-black text-white mb-6">Project Portfolio</h1>
-          <p className="text-xl text-slate-400 max-w-3xl">20+ private projects spanning 2011–2026. All client details are confidential, but the results speak for themselves.</p>
+          <p className="text-xl text-slate-400 max-w-3xl">30+ private projects spanning 2011–2026. All client details are confidential, but the results speak for themselves.</p>
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
