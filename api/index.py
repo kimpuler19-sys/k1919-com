@@ -5,7 +5,7 @@ app = FastAPI()
 @app.get("/api/services")
 def get_services():
     return [
-        # === EXISTING SERVICES (12) ===
+        # === EXISTING SERVICES (12) - tetap sama ===
         {
             "title": "🚀 Elite Web Systems (Next.js/Vue.js)",
             "original_price": 200,
@@ -90,64 +90,22 @@ def get_services():
             "paypal_val": "280",
             "desc": "Prepare your site for the AI era. We structure your content with schema markup and Q&A format so AI like ChatGPT can find and cite you."
         },
-        # === PYTHON SOLUTIONS (8) ===
+        # === PYTHON SOLUTIONS (disederhanakan menjadi 2 kategori, harga $50 untuk diskusi) ===
         {
-            "title": "🧠 Custom AI & LLM Solutions (Python)",
-            "original_price": 3500,
-            "price": 2800,
-            "paypal_val": "2800",
-            "desc": "Private LLM deployments, RAG systems, and AI chatbots trained on your proprietary data. Secure, self-hosted, and production-ready."
+            "title": "🐍 Python Development & AI Integration",
+            "original_price": 50,  # harga pasar untuk diskusi
+            "price": 50,
+            "paypal_val": "50",
+            "desc": "Custom Python development, AI/LLM integration, API creation, and web apps with FastAPI/Django. Let's discuss your project needs."
         },
         {
-            "title": "⚡ Python Web Development (FastAPI/Django)",
-            "original_price": 2500,
-            "price": 2000,
-            "paypal_val": "2000",
-            "desc": "High-performance backend systems with FastAPI, Django, or Flask. Scalable APIs, clean architecture, and seamless frontend integration."
+            "title": "📊 Data Engineering & Automation (Python)",
+            "original_price": 50,
+            "price": 50,
+            "paypal_val": "50",
+            "desc": "Data pipelines, ETL, process automation, web scraping, and machine learning models. Initial consultation to scope your requirements."
         },
-        {
-            "title": "📊 Data Engineering & ETL Pipelines",
-            "original_price": 2800,
-            "price": 2240,
-            "paypal_val": "2240",
-            "desc": "Robust data pipelines for processing large datasets. Integration with Spark, Hadoop, and cloud platforms. Transform raw data into actionable insights."
-        },
-        {
-            "title": "🤖 Machine Learning & AI Models",
-            "original_price": 3200,
-            "price": 2560,
-            "paypal_val": "2560",
-            "desc": "Predictive modeling, recommendation engines, fraud detection, and computer vision solutions. Built with TensorFlow, PyTorch, and scikit-learn."
-        },
-        {
-            "title": "🔄 Process Automation & RPA",
-            "original_price": 1800,
-            "price": 1440,
-            "paypal_val": "1440",
-            "desc": "Automate repetitive tasks, web scraping with Selenium, robotic process automation, and workflow optimization. Save hundreds of labor hours."
-        },
-        {
-            "title": "🔌 Python API Development & Integration",
-            "original_price": 1500,
-            "price": 1200,
-            "paypal_val": "1200",
-            "desc": "RESTful/GraphQL APIs, microservices architecture, and third-party integrations. Connect your systems seamlessly with robust, documented APIs."
-        },
-        {
-            "title": "📈 Data Science & Analytics",
-            "original_price": 2200,
-            "price": 1760,
-            "paypal_val": "1760",
-            "desc": "Interactive dashboards, statistical analysis, and business intelligence solutions using Pandas, NumPy, and visualization tools."
-        },
-        {
-            "title": "⚙️ Python Performance Optimization",
-            "original_price": 1600,
-            "price": 1280,
-            "paypal_val": "1280",
-            "desc": "Optimize legacy Python code, migrate from SAS/Spark/R to Python, implement vector processing with Numba, and reduce compute costs."
-        },
-        # === PHP SERVICES (2) ===
+        # === PHP SERVICES (2) - dengan border orange nanti di frontend ===
         {
             "title": "🐘 Weekly PHP Maintenance (20 hours/week)",
             "original_price": 750,
