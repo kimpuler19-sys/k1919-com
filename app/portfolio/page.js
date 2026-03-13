@@ -3,7 +3,28 @@
 
 import Link from 'next/link'
 
-const caseStudies = [ ... ] // data tetap sama
+const caseStudies = [
+  {
+    id: '1',
+    year: '2023',
+    client: 'Acme Corp',
+    title: 'Project X',
+    problem: 'Low conversion rate',
+    solution: 'Redesigned checkout flow',
+    result: '↑ 35% conversion',
+    tech: ['Next.js', 'Tailwind', 'Node.js']
+  },
+  {
+    id: '2',
+    year: '2022',
+    client: 'Beta LLC',
+    title: 'Platform Migration',
+    problem: 'Legacy infra',
+    solution: 'Migrated to cloud-native',
+    result: '↓ 50% infra cost',
+    tech: ['React', 'Kubernetes', 'AWS']
+  }
+];
 
 export default function Portfolio() {
   return (
