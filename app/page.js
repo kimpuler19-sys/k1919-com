@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
@@ -117,11 +118,14 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Navigation */}
         <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
-          <div className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</div>
-          <div className="flex gap-6 items-center">
-            <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
-          </div>
-        </nav>
+  <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
+  <div className="flex gap-6 items-center">
+    <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
+    <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
+    <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
+    <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
+  </div>
+</nav>
 
         {/* Hero Section - Improved with specific value proposition */}
         <header className="max-w-5xl mb-24 text-left">
@@ -234,12 +238,15 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="mt-48 py-20 border-t border-white/5 text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase font-bold flex flex-col md:flex-row justify-between items-center gap-10">
-          <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
-          <div className="flex gap-10">
-            <a href="/terms" className="text-purple-500 hover:text-white">Terms of Service</a>
-            <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult Now</a>
-          </div>
-        </footer>
+  <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
+  <div className="flex gap-10">
+    <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
+    <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
+    <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
+    <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+    <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
+  </div>
+</footer>
       </div>
 
       {/* Modal for ordering (unchanged) */}
