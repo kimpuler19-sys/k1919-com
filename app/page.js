@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { blogPosts } from './blog/data'
 
 export default function Home() {
   const [services, setServices] = useState([])
@@ -224,18 +225,32 @@ export default function Home() {
         </section>
 
         {/* Insights - Mini Blog */}
-        <section className="mb-32">
-          <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Insights <span className="text-purple-500">& Trends</span></h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {insights.map((item, idx) => (
-              <div key={idx} className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition">
-                <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-slate-400 mb-4">{item.summary}</p>
-                <a href={item.link} className="text-purple-400 text-sm font-bold uppercase tracking-wider hover:text-white transition">Read more →</a>
-              </div>
-            ))}
+        {/* Insights - Now dynamic from blog */}
+<section className="mb-32">
+  <div className="flex justify-between items-center mb-12">
+    <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Insights <span className="text-purple-500">& Trends</span></h2>
+    <Link href="/blog" className="text-purple-400 hover:text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+      View all articles <span>→</span>
+    </Link>
+  </div>
+  <div className="grid md:grid-cols-3 gap-8">
+    {blogPosts.slice(0, 3).map((post, idx) => (
+      <Link href={`/blog/${post.slug}`} key={idx} className="group">
+        <div className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition h-full flex flex-col">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-xs text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full">{post.date}</span>
+            <span className="text-xs text-slate-500">{post.readTime}</span>
           </div>
-        </section>
+          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition">{post.title}</h3>
+          <p className="text-slate-400 text-sm mb-4 flex-grow">{post.excerpt}</p>
+          <div className="text-purple-400 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+            Read more <span>→</span>
+          </div>
+        </div>
+      </Link>
+    ))}
+  </div>
+</section>
 
         {/* Footer */}
         <footer className="mt-48 py-20 border-t border-white/5 text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase font-bold flex flex-col md:flex-row justify-between items-center gap-10">
