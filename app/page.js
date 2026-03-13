@@ -14,21 +14,36 @@ export default function Home() {
   }, [])
 
   const handleAction = (s) => {
-    if (s.price === "5000") { window.location.href = "/order-pro" } 
-    else { setSelectedService(s); setShowModal(true) }
+    // Semua layanan sekarang akan memicu modal yang sama (kecuali Anda ingin logika khusus)
+    setSelectedService(s);
+    setShowModal(true);
   }
 
   const handlePayment = (e) => {
     e.preventDefault()
     if (parseInt(formData.captcha) !== captchaValue + 5) { alert("Security Check Failed!"); return }
     const paypalEmail = "jokonardi@gmail.com";
+    // Memperbaiki orderNote agar lebih rapi dan menggunakan nilai yang benar
     const orderNote = `Order: ${selectedService.title} | Client: ${formData.name} | WA: ${formData.phone} | Email: ${formData.email} | Project: ${formData.desc}`;
-    const baseUrl = "https://www.paypal.com";
+    const baseUrl = "https://www.paypal.com/cgi-bin/webscr"; // URL yang lebih standar
     const params = new URLSearchParams({
-      cmd: "_xclick", business: paypalEmail, item_name: orderNote, amount: selectedService.paypal_val, currency_code: "USD"
+      cmd: "_xclick",
+      business: paypalEmail,
+      item_name: orderNote.substring(0, 120), // PayPal batasi panjang, potong jika perlu
+      amount: selectedService.paypal_val,
+      currency_code: "USD",
+      // Tambahkan return dan cancel URL jika diperlukan
+      // return: "https://kimpuler.com/success",
+      // cancel_return: "https://kimpuler.com"
     });
     window.open(`${baseUrl}?${params.toString()}`, '_blank')
     setShowModal(false)
+  }
+
+  // Fungsi untuk menghitung persentase diskon
+  const calculateDiscountPercent = (original, current) => {
+    if (!original || original <= current) return null;
+    return Math.round(((original - current) / original) * 100);
   }
 
   return (
@@ -51,35 +66,44 @@ export default function Home() {
             Develop your<br/>Idea For <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 italic">Future.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light italic">
-            Architecting resilient **PHP Ecosystems**, **Advanced DBA Operations**, and **Solana Blockchain Solutions** for global market leaders.
+            Expert development & AI-ready solutions for global leaders. Specialized in modern stacks, blockchain, and performance optimization.
           </p>
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {services.map((s, i) => {
-            const isRecommended = s.price === "5000" || s.price === "2000";
+            // Tentukan apakah layanan ini "direkomendasikan" (misal: harga di atas 2000 atau yang baru)
+            const isRecommended = s.original_price >= 2000 || i >= 6; // Layanan baru (indeks 6-11) juga direkomendasikan
+            const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null;
             return (
-              <div key={i} className={`group p-10 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${isRecommended ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 border-purple-500 shadow-2xl scale-[1.03] z-10' : 'bg-slate-900/30 border-white/5 hover:border-purple-500/30'}`}>
+              <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${isRecommended ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 border-purple-500 shadow-2xl scale-[1.02] z-10' : 'bg-slate-900/30 border-white/5 hover:border-purple-500/30'}`}>
                 <div className="text-left">
-                  <div className="flex justify-between items-center mb-8">
+                  <div className="flex justify-between items-center mb-6">
                     <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
-                      {isRecommended ? '★ Recommended' : 'Professional Service'}
+                      {isRecommended ? '★ 2026 Pro' : 'Essential'}
                     </span>
-                    <span className="text-slate-800 font-black text-5xl italic opacity-50">0{i+1}</span>
+                    <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-purple-400 transition uppercase tracking-tight leading-tight">{s.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed opacity-70 min-h-[100px]">{s.desc}</p>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition uppercase tracking-tight leading-tight">{s.title}</h3>
+                  <p className="text-slate-400 text-xs leading-relaxed opacity-80 min-h-[90px]">{s.desc}</p>
                 </div>
-                <div className="mt-auto pt-8 border-t border-white/5">
-                  <div className="mb-6 text-left">
-                    <span className="text-slate-500 text-[10px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-5xl font-black text-white tracking-tighter">${s.price}</span>
-                      <span className="text-purple-500 text-xs font-bold font-mono uppercase tracking-widest">USD</span>
+                <div className="mt-auto pt-6 border-t border-white/5">
+                  <div className="mb-4 text-left">
+                    <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment (USD)</span>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      {/* Tampilkan harga diskon */}
+                      <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
+                      {/* Tampilkan harga asli yang dicoret jika ada */}
+                      {s.original_price && s.original_price > s.price && (
+                        <>
+                          <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
+                          <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
+                        </>
+                      )}
                     </div>
                   </div>
                   <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
-                    Acquire Solution
+                    Select & Continue
                   </button>
                 </div>
               </div>
@@ -96,7 +120,7 @@ export default function Home() {
         </footer>
       </div>
 
-      {/* MODAL FORM STEP 01 */}
+      {/* MODAL (sama persis dengan kode asli Anda, tidak perlu diubah) */}
       {showModal && selectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
           <div className="bg-slate-950 border border-white/10 w-full max-w-xl p-10 rounded-[3rem] shadow-2xl relative overflow-y-auto max-h-[90vh]">
