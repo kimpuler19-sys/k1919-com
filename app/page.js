@@ -130,17 +130,17 @@ export default function Home() {
 </nav>
 
         {/* Hero Section - Improved with specific value proposition */}
-        <header className="max-w-5xl mb-24 text-left">
-          <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.85] mb-12 tracking-tighter uppercase">
-            <span className="block">Your Technical</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Partner for Growth</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light">
-            I help businesses build fast, secure, and AI-ready websites and applications. 
-            From startups to enterprises, I provide expert development and strategic guidance 
-            as your dedicated partner—not just a freelancer.
-          </p>
-        </header>
+       <header className="max-w-5xl mb-24 text-left">
+  <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.85] mb-12 tracking-tighter uppercase">
+    <span className="block">Your Technical</span>
+    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Partner for Growth</span>
+  </h1>
+  <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light">
+    We help businesses build fast, secure, and AI-ready websites and applications. 
+    From startups to enterprises, we provide expert development and strategic guidance 
+    as your dedicated partner—not just a freelancer.
+  </p>
+</header>
 
         {/* How I Work Section - The partnership model */}
         <section className="mb-32">

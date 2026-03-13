@@ -51,7 +51,7 @@ export const blogPosts = [
       <p><strong>Best for:</strong> Internal tools, MVPs, and apps with standard workflows. You can launch in weeks instead of months.</p>
       <p><strong>Trade-offs:</strong> May have vendor lock-in, customization limitations.</p>
       <h2>My Approach</h2>
-      <p>I help clients choose the right path based on their goals. Often, a hybrid approach works best—low-code for internal dashboards, full-stack for customer-facing features.</p>
+      <p>We help clients choose the right path based on their goals. Often, a hybrid approach works best—low-code for internal dashboards, full-stack for customer-facing features.</p>
     `,
     date: "February 28, 2026",
     readTime: "5 min read",

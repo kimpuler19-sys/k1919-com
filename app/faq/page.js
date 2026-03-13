@@ -7,35 +7,35 @@ import { useState } from 'react'
 const faqs = [
   {
     question: "How do you structure your engagement?",
-    answer: "I typically start with a discovery call to understand your needs, then propose a tailored solution. For smaller projects, I provide a fixed quote. For larger, ongoing work, I offer weekly or monthly retainers. I'm flexible to what works best for you."
+    answer: "We typically start with a discovery call to understand your needs, then propose a tailored solution. For smaller projects, we provide a fixed quote. For larger, ongoing work, we offer weekly or monthly retainers. We're flexible to what works best for you."
   },
   {
     question: "What if I need ongoing support after launch?",
-    answer: "That's where I shine! I offer proactive maintenance retainers that include security updates, performance monitoring, and priority support. You'll have a dedicated partner who knows your system inside out."
+    answer: "That's where we shine! We offer proactive maintenance retainers that include security updates, performance monitoring, and priority support. You'll have a dedicated partner who knows your system inside out."
   },
   {
     question: "How do you handle communication and project management?",
-    answer: "I use tools like Slack, Trello/Asana, and regular video calls to keep you in the loop. You'll get daily or weekly updates depending on the project size. Transparency is key."
+    answer: "We use tools like Slack, Trello/Asana, and regular video calls to keep you in the loop. You'll get daily or weekly updates depending on the project size. Transparency is key."
   },
   {
     question: "What technologies do you specialize in?",
-    answer: "My core stack includes Next.js, React, Node.js, Python, and PHP for web apps. For databases, I'm expert in PostgreSQL, MySQL, and MongoDB. On blockchain, I work with Solana (Rust/Anchor) and Ethereum (Solidity). I also integrate AI features using OpenAI and vector databases."
+    answer: "Our core stack includes Next.js, React, Node.js, Python, and PHP for web apps. For databases, we're expert in PostgreSQL, MySQL, and MongoDB. On blockchain, we work with Solana (Rust/Anchor) and Ethereum (Solidity). We also integrate AI features using OpenAI and vector databases."
   },
   {
     question: "Can you take over an existing project?",
-    answer: "Absolutely! I've rescued and improved many existing codebases. I'll conduct an initial audit to understand the architecture and then propose improvements."
+    answer: "Absolutely! We've rescued and improved many existing codebases. We'll conduct an initial audit to understand the architecture and then propose improvements."
   },
   {
     question: "How do you ensure quality and security?",
-    answer: "I follow industry best practices: code reviews, automated testing, dependency scanning, and secure coding guidelines. For security-critical projects, I can also arrange third-party audits."
+    answer: "We follow industry best practices: code reviews, automated testing, dependency scanning, and secure coding guidelines. For security-critical projects, we can also arrange third-party audits."
   },
   {
     question: "What are your payment terms?",
-    answer: "For fixed projects, I typically ask for 50% upfront and 50% on completion. For retainers, payment is monthly in advance. I accept PayPal, bank transfer, or crypto (USDC/USDT)."
+    answer: "For fixed projects, we typically ask for 50% upfront and 50% on completion. For retainers, payment is monthly in advance. We accept PayPal, bank transfer, or crypto (USDC/USDT)."
   },
   {
     question: "Do you sign NDAs or work under contract?",
-    answer: "Yes, I'm comfortable with NDAs and formal contracts. I want you to feel secure in our partnership."
+    answer: "Yes, we're comfortable with NDAs and formal contracts. We want you to feel secure in our partnership."
   }
 ]
 
@@ -61,7 +61,7 @@ export default function FAQ() {
 
         <header className="mb-16">
           <h1 className="text-5xl font-black text-white mb-6">Frequently Asked Questions</h1>
-          <p className="text-xl text-slate-400">Everything you need to know about working with me. If you don't see your question, just ask!</p>
+          <p className="text-xl text-slate-400">Everything you need to know about working with us. If you don't see your question, just ask!</p>
         </header>
 
         <div className="space-y-4">
@@ -85,7 +85,7 @@ export default function FAQ() {
 
         <div className="mt-16 p-8 bg-purple-900/20 rounded-3xl border border-purple-500/30 text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Still have questions?</h2>
-          <p className="text-slate-300 mb-6">I'm happy to answer any additional questions personally.</p>
+          <p className="text-slate-300 mb-6">We're happy to answer any additional questions personally.</p>
           <a href="https://wa.me/6283841632837" target="_blank" className="inline-block bg-purple-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 transition shadow-xl">
             Chat on WhatsApp
           </a>
