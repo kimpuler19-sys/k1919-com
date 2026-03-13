@@ -1,6 +1,6 @@
 'use client'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { blogPosts } from './blog/data'
 
 export default function Home() {
@@ -11,18 +11,19 @@ export default function Home() {
   const [captchaValue, setCaptchaValue] = useState(0)
 
   useEffect(() => {
-    fetch('/api/services').then(res => res.json()).then(json => setServices(json)).catch(err => console.error(err))
+    // Ambil data dari API
+    fetch('/api/services')
+      .then(res => res.json())
+      .then(json => setServices(json))
+      .catch(err => console.error(err))
     setCaptchaValue(Math.floor(Math.random() * 80) + 10)
   }, [])
 
-  // Fungsi untuk menangani klik tombol pada layanan
   const handleAction = (s) => {
-    // Jika layanan di atas $1000 (anggap paket besar), arahkan ke WhatsApp
     if (s.original_price >= 1000) {
       const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`);
       window.open(`https://wa.me/6283841632837?text=${message}`, '_blank');
     } else {
-      // Untuk paket kecil, buka modal order
       setSelectedService(s);
       setShowModal(true);
     }
@@ -45,7 +46,7 @@ export default function Home() {
     setShowModal(false)
   }
 
-  // Data statis untuk studi kasus (bisa diganti nanti dengan API)
+  // Data studi kasus statis
   const caseStudies = [
     {
       title: "E-commerce Speed Boost",
@@ -65,29 +66,23 @@ export default function Home() {
       solution: "Custom chatbot using RAG on company docs",
       result: "70% reduction in support tickets, 24/7 availability",
     },
-  ];
+    {
+      title: "ML-Powered Fraud Detection",
+      problem: "Financial client needed real-time fraud detection",
+      solution: "Built ensemble ML model with Python + deployed as API",
+      result: "94% accuracy, $500K prevented losses in first quarter",
+    },
+  ]
 
-  // Data statis untuk insight
-  const insights = [
-    {
-      title: "Why Your Site Needs AI Optimization in 2026",
-      summary: "With AI search on the rise, structuring your content for AI is no longer optional.",
-      link: "#",
-    },
-    {
-      title: "The True Cost of a Hacked Website",
-      summary: "Proactive maintenance is cheaper than recovering from a breach. Here's why.",
-      link: "#",
-    },
-    {
-      title: "Full-Stack vs. Low-Code: Which is Right for You?",
-      summary: "How to choose the right development approach for your next project.",
-      link: "#",
-    },
-  ];
-
-  // Fungsi untuk mendapatkan manfaat singkat berdasarkan judul layanan (bisa disempurnakan)
   const getShortBenefit = (title) => {
+    if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models.";
+    if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems.";
+    if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights.";
+    if (title.includes("Machine Learning")) return "Predict outcomes before they happen.";
+    if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks.";
+    if (title.includes("API Development")) return "Connect your entire software ecosystem seamlessly.";
+    if (title.includes("Data Science")) return "Interactive dashboards that drive decisions.";
+    if (title.includes("Performance Optimization")) return "Make your Python code 10x faster, cut cloud costs.";
     if (title.includes("Maintenance")) return "Sleep better at night – your site is always safe and fast.";
     if (title.includes("Speed")) return "Convert more visitors with lightning-fast pages.";
     if (title.includes("Full-Stack")) return "Get a scalable app built with modern tech, ready for growth.";
@@ -97,11 +92,13 @@ export default function Home() {
     if (title.includes("Elite Web")) return "Sub-second loading, edge-deployed, future-proof.";
     if (title.includes("Developer Time")) return "Dedicated hours to tackle your most complex tasks.";
     if (title.includes("DBA")) return "Make your database bulletproof and blazing fast.";
-    if (title.includes("Trial")) return "Test my skills risk-free on a small project.";
+    if (title.includes("Trial")) return "Test our skills risk-free on a small project.";
     if (title.includes("Retainer")) return "A true technical partner, always on your side.";
     if (title.includes("Solana")) return "Enterprise-grade blockchain solutions.";
+    if (title.includes("Weekly PHP Maintenance")) return "Keep your PHP application fresh and secure with weekly dedicated hours.";
+    if (title.includes("Custom PHP Dashboard")) return "Get a fully functional dashboard with server, backed by 1 year of support.";
     return "Tailored solution for your business needs.";
-  };
+  }
 
   const calculateDiscountPercent = (original, current) => {
     if (!original || original <= current) return null;
@@ -110,7 +107,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
-      {/* Background blur effect */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 blur-[150px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[150px] rounded-full"></div>
@@ -119,30 +115,31 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Navigation */}
         <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
-  <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
-  <div className="flex gap-6 items-center">
-    <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
-    <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
-    <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
-    <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
-    <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
-  </div>
-</nav>
+          <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
+          <div className="flex gap-6 items-center">
+            <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
+            <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
+            <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
+            <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
+            <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
+          </div>
+        </nav>
 
-        {/* Hero Section - Improved with specific value proposition */}
-       <header className="max-w-5xl mb-24 text-left">
-  <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.85] mb-12 tracking-tighter uppercase">
-    <span className="block">Your Technical</span>
-    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Partner for Growth</span>
-  </h1>
-  <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light">
-    We help businesses build fast, secure, and AI-ready websites and applications. 
-    From startups to enterprises, we provide expert development and strategic guidance 
-    as your dedicated partner—not just a freelancer.
-  </p>
-</header>
+        {/* Hero Section */}
+        <header className="max-w-5xl mb-24 text-left">
+          <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.85] mb-12 tracking-tighter uppercase">
+            <span className="block">Your Technical</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">Partner for Growth</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-3xl border-l-2 border-purple-500 pl-8 font-light">
+            We help businesses build fast, secure, and AI-ready websites and applications. 
+            From startups to enterprises, we provide expert development and strategic guidance 
+            as your dedicated partner—not just a freelancer. Now with specialized Python & PHP solutions 
+            for AI, data engineering, and automation.
+          </p>
+        </header>
 
-        {/* How I Work Section - The partnership model */}
+        {/* How We Work */}
         <section className="mb-32">
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">How We <span className="text-purple-500">Partner</span></h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -159,17 +156,17 @@ export default function Home() {
             <div className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition">
               <div className="text-5xl mb-4">3️⃣</div>
               <h3 className="text-xl font-bold text-white mb-2">Long-Term Partnership</h3>
-              <p className="text-slate-400">Post-launch support, maintenance, and continuous improvement—I'm always here.</p>
+              <p className="text-slate-400">Post-launch support, maintenance, and continuous improvement—we're always here.</p>
             </div>
           </div>
         </section>
 
-        {/* Services Section - Now with benefit subheading */}
+        {/* Services Section */}
         <section className="mb-32">
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Solutions for <span className="text-purple-500">2026 & Beyond</span></h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map((s, i) => {
-              const isRecommended = s.original_price >= 2000 || i >= 6;
+              const isRecommended = s.original_price >= 2000;
               const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null;
               const shortBenefit = getShortBenefit(s.title);
               return (
@@ -182,7 +179,6 @@ export default function Home() {
                       <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</h3>
-                    {/* Benefit subheading - new! */}
                     <p className="text-purple-400 text-sm font-semibold mb-2 italic">✨ {shortBenefit}</p>
                     <p className="text-slate-400 text-xs leading-relaxed opacity-80 min-h-[70px]">{s.desc}</p>
                   </div>
@@ -209,10 +205,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Recent Wins - Case Studies */}
+        {/* Recent Wins */}
         <section className="mb-32">
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Recent <span className="text-purple-500">Wins</span></h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {caseStudies.map((cs, idx) => (
               <div key={idx} className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition">
                 <h3 className="text-xl font-bold text-white mb-3">{cs.title}</h3>
@@ -224,50 +220,48 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Insights - Mini Blog */}
-        {/* Insights - Now dynamic from blog */}
-<section className="mb-32">
-  <div className="flex justify-between items-center mb-12">
-    <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Insights <span className="text-purple-500">& Trends</span></h2>
-    <Link href="/blog" className="text-purple-400 hover:text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-      View all articles <span>→</span>
-    </Link>
-  </div>
-  <div className="grid md:grid-cols-3 gap-8">
-    {blogPosts.slice(0, 3).map((post, idx) => (
-      <Link href={`/blog/${post.slug}`} key={idx} className="group">
-        <div className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition h-full flex flex-col">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-xs text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full">{post.date}</span>
-            <span className="text-xs text-slate-500">{post.readTime}</span>
+        {/* Blog Insights */}
+        <section className="mb-32">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Insights <span className="text-purple-500">& Trends</span></h2>
+            <Link href="/blog" className="text-purple-400 hover:text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+              View all articles <span>→</span>
+            </Link>
           </div>
-          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition">{post.title}</h3>
-          <p className="text-slate-400 text-sm mb-4 flex-grow">{post.excerpt}</p>
-          <div className="text-purple-400 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
-            Read more <span>→</span>
+          <div className="grid md:grid-cols-3 gap-8">
+            {blogPosts.slice(0, 3).map((post, idx) => (
+              <Link href={`/blog/${post.slug}`} key={idx} className="group">
+                <div className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition h-full flex flex-col">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xs text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full">{post.date}</span>
+                    <span className="text-xs text-slate-500">{post.readTime}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition">{post.title}</h3>
+                  <p className="text-slate-400 text-sm mb-4 flex-grow">{post.excerpt}</p>
+                  <div className="text-purple-400 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    Read more <span>→</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        </div>
-      </Link>
-    ))}
-  </div>
-</section>
+        </section>
 
         {/* Footer */}
         <footer className="mt-48 py-20 border-t border-white/5 text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase font-bold flex flex-col md:flex-row justify-between items-center gap-10">
-  <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
-  <div className="flex gap-10">
-    <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
-    <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
-    <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
-    <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
-    <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
-    
-    <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
-  </div>
-</footer>
+          <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
+          <div className="flex gap-10">
+            <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
+            <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
+            <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
+            <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
+            <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+            <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
+          </div>
+        </footer>
       </div>
 
-      {/* Modal for ordering (unchanged) */}
+      {/* Modal Order */}
       {showModal && selectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
           <div className="bg-slate-950 border border-white/10 w-full max-w-xl p-10 rounded-[3rem] shadow-2xl relative overflow-y-auto max-h-[90vh]">

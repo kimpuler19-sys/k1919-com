@@ -5,11 +5,11 @@ app = FastAPI()
 @app.get("/api/services")
 def get_services():
     return [
-        # Layanan Eksisting (dengan sedikit penyesuaian harga dan deskripsi)
+        # === EXISTING SERVICES (12) ===
         {
             "title": "🚀 Elite Web Systems (Next.js/Vue.js)",
-            "original_price": 200,   # Harga pasar
-            "price": 160,             # Setelah diskon 20%
+            "original_price": 200,
+            "price": 160,
             "paypal_val": "160",
             "desc": "High-performance web apps with Next.js 15+, Vue.js 3, or Nuxt. Deployed on Vercel Edge for sub-second loading. Includes 3 months of maintenance."
         },
@@ -48,7 +48,6 @@ def get_services():
             "paypal_val": "5600",
             "desc": "Custom SPL programs, market-making tools, and enterprise-grade security on Solana. The ultimate solution for blockchain innovators."
         },
-        # ===== LAYANAN BARU PROSPEK 2026 =====
         {
             "title": "🛡️ Proactive Maintenance Retainer",
             "original_price": 200,
@@ -90,5 +89,77 @@ def get_services():
             "price": 280,
             "paypal_val": "280",
             "desc": "Prepare your site for the AI era. We structure your content with schema markup and Q&A format so AI like ChatGPT can find and cite you."
+        },
+        # === PYTHON SOLUTIONS (8) ===
+        {
+            "title": "🧠 Custom AI & LLM Solutions (Python)",
+            "original_price": 3500,
+            "price": 2800,
+            "paypal_val": "2800",
+            "desc": "Private LLM deployments, RAG systems, and AI chatbots trained on your proprietary data. Secure, self-hosted, and production-ready."
+        },
+        {
+            "title": "⚡ Python Web Development (FastAPI/Django)",
+            "original_price": 2500,
+            "price": 2000,
+            "paypal_val": "2000",
+            "desc": "High-performance backend systems with FastAPI, Django, or Flask. Scalable APIs, clean architecture, and seamless frontend integration."
+        },
+        {
+            "title": "📊 Data Engineering & ETL Pipelines",
+            "original_price": 2800,
+            "price": 2240,
+            "paypal_val": "2240",
+            "desc": "Robust data pipelines for processing large datasets. Integration with Spark, Hadoop, and cloud platforms. Transform raw data into actionable insights."
+        },
+        {
+            "title": "🤖 Machine Learning & AI Models",
+            "original_price": 3200,
+            "price": 2560,
+            "paypal_val": "2560",
+            "desc": "Predictive modeling, recommendation engines, fraud detection, and computer vision solutions. Built with TensorFlow, PyTorch, and scikit-learn."
+        },
+        {
+            "title": "🔄 Process Automation & RPA",
+            "original_price": 1800,
+            "price": 1440,
+            "paypal_val": "1440",
+            "desc": "Automate repetitive tasks, web scraping with Selenium, robotic process automation, and workflow optimization. Save hundreds of labor hours."
+        },
+        {
+            "title": "🔌 Python API Development & Integration",
+            "original_price": 1500,
+            "price": 1200,
+            "paypal_val": "1200",
+            "desc": "RESTful/GraphQL APIs, microservices architecture, and third-party integrations. Connect your systems seamlessly with robust, documented APIs."
+        },
+        {
+            "title": "📈 Data Science & Analytics",
+            "original_price": 2200,
+            "price": 1760,
+            "paypal_val": "1760",
+            "desc": "Interactive dashboards, statistical analysis, and business intelligence solutions using Pandas, NumPy, and visualization tools."
+        },
+        {
+            "title": "⚙️ Python Performance Optimization",
+            "original_price": 1600,
+            "price": 1280,
+            "paypal_val": "1280",
+            "desc": "Optimize legacy Python code, migrate from SAS/Spark/R to Python, implement vector processing with Numba, and reduce compute costs."
+        },
+        # === PHP SERVICES (2) ===
+        {
+            "title": "🐘 Weekly PHP Maintenance (20 hours/week)",
+            "original_price": 750,
+            "price": 600,
+            "paypal_val": "600",
+            "desc": "Dedicated 20 hours per week for PHP updates, bug fixes, and feature enhancements. Perfect for ongoing projects needing regular attention."
+        },
+        {
+            "title": "📊 Custom PHP Dashboard with Server Setup (1 year)",
+            "original_price": 1875,
+            "price": 1500,
+            "paypal_val": "1500",
+            "desc": "Complete dashboard development using PHP, including server configuration and 1-year maintenance. 20 hours/week for 2 months."
         }
     ]
