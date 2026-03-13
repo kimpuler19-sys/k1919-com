@@ -96,14 +96,14 @@ def get_services():
             "original_price": 50,  # harga pasar untuk diskusi
             "price": 50,
             "paypal_val": "50",
-            "desc": "Custom Python development, AI/LLM integration, API creation, and web apps with FastAPI/Django. Let's discuss your project needs."
+            "desc": "Custom Python development, AI/LLM integration, API creation, and web apps with FastAPI/Django. Let's discuss your project needs. Prices for Start and Discussion tiers will be determined based on project complexity."
         },
         {
             "title": "📊 Data Engineering & Automation (Python)",
             "original_price": 50,
             "price": 50,
             "paypal_val": "50",
-            "desc": "Data pipelines, ETL, process automation, web scraping, and machine learning models. Initial consultation to scope your requirements."
+            "desc": "Data pipelines, ETL, process automation, web scraping, and machine learning models. Initial consultation to scope your requirements. Prices for Start and Discussion tiers will be determined based on project complexity."
         },
         # === PHP SERVICES (2) - dengan border orange nanti di frontend ===
         {
