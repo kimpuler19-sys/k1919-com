@@ -73,6 +73,8 @@ export default function Home() {
   ]
 
   const getShortBenefit = (title) => {
+    if (title.includes("Python Development")) return "Kickstart your Python project with a discovery session."
+    if (title.includes("Data Engineering")) return "Let's discuss your data challenges and automation needs."
     if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models."
     if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems."
     if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights."
@@ -103,18 +105,18 @@ export default function Home() {
     return Math.round(((original - current) / original) * 100)
   }
 
-  // Fungsi untuk menentukan warna border berdasarkan kategori
-  const getCategoryBorder = (title) => {
-    const t = title.toLowerCase();
-    if (t.includes("php")) return "border-orange-700";
-    if (t.includes("python") || t.includes("machine learning") || t.includes("data engineering") || t.includes("data science") || t.includes("ai & llm")) return "border-blue-500";
-    if (t.includes("solana")) return "border-purple-400";
-    if (t.includes("dba")) return "border-red-500";
-    if (t.includes("retainer")) return "border-yellow-600";
-    if (t.includes("web systems") || t.includes("full-stack") || t.includes("elite web") || t.includes("next.js") || t.includes("vue")) return "border-cyan-500";
-    if (t.includes("ai feature") || t.includes("aio") || t.includes("ai-friendly")) return "border-green-500";
-    if (t.includes("maintenance")) return "border-pink-500";
-    return "border-white/5";
+  // Fungsi untuk menentukan kelas border berdasarkan judul layanan
+  const getBorderClass = (title, original_price) => {
+    // 2026 PRO (harga >= 2000) dapat border ungu terang (seperti sebelumnya)
+    if (original_price >= 2000) {
+      return "border-purple-500 shadow-2xl" // atau kelas yang sama dengan sebelumnya
+    }
+    // PHP services dapat border orange gelap
+    if (title.includes("PHP")) {
+      return "border-orange-700 border-2" // orange gelap dengan ketebalan 2
+    }
+    // Layanan lainnya (termasuk Python yang $50) dapat border abu-abu standar
+    return "border-white/5 hover:border-purple-500/30"
   }
 
   return (
@@ -181,18 +183,15 @@ export default function Home() {
               const isRecommended = s.original_price >= 2000
               const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
               const shortBenefit = getShortBenefit(s.title)
-              const borderColorClass = isRecommended ? 'border-purple-500' : getCategoryBorder(s.title)
-              const baseClasses = "group p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col justify-between"
-              const recommendedClasses = isRecommended 
-                ? "bg-gradient-to-br from-purple-900/40 to-slate-900/60 shadow-2xl scale-[1.02] z-10" 
-                : "bg-slate-900/30"
-              const finalClasses = `${baseClasses} ${recommendedClasses} ${borderColorClass}`
+              const borderClass = getBorderClass(s.title, s.original_price)
+              // Untuk 2026 PRO, kita tetap pakai gradient background, tapi border sudah diatur di getBorderClass
+              const isPro = s.original_price >= 2000
               return (
-                <div key={i} className={finalClasses}>
+                <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${borderClass} ${isPro ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 scale-[1.02] z-10' : 'bg-slate-900/30'}`}>
                   <div className="text-left">
                     <div className="flex justify-between items-center mb-4">
-                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
-                        {isRecommended ? '★ 2026 PRO' : 'ESSENTIAL'}
+                      <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isPro ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
+                        {isPro ? '★ 2026 PRO' : 'ESSENTIAL'}
                       </span>
                       <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                     </div>
@@ -213,7 +212,7 @@ export default function Home() {
                         )}
                       </div>
                     </div>
-                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isPro ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
                       {s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
                     </button>
                   </div>
