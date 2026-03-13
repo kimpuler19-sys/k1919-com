@@ -13,6 +13,11 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Kimpuler Design Digital Solution",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
   description: "Full-Stack Solutions: Web Development, DBA, Crypto Solutions, and Professional Live Commerce Hosting.",
 };
 
