@@ -131,6 +131,7 @@ export default function Home() {
         <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
           <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
           <div className="flex gap-6 items-center">
+            <Link href="/services" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Services</Link>
             <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
             <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
             <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
