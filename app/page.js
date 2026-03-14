@@ -135,6 +135,7 @@ export default function Home() {
             <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
             <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
             <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
+            <Link href="/contact" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Contact</Link>
             <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
           </div>
         </nav>
@@ -273,6 +274,7 @@ export default function Home() {
             <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
             <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
             <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+            <Link href="/contact" className="text-slate-500 hover:text-white">Contact</Link>
             <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
           </div>
         </footer>
