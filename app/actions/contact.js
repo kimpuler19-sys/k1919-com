@@ -2,10 +2,34 @@
 import { Resend } from 'resend'
 
 export async function submitContact(formData) {
-  console.log('🔑 RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY) // Logs true/false
+  const name = formData.get('name')
+  const email = formData.get('email')
+  const message = formData.get('message')
 
-  if (!process.env.RESEND_API_KEY) {
-    return { error: 'Server configuration error. Please contact support.' }
+  if (!name || !email || !message) {
+    return { error: 'All fields are required' }
   }
-  // ... rest of your code
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
+
+  
+  try {
+    await resend.emails.send({
+      from: 'Kimpuler Contact <onboarding@resend.dev>',
+      to: [process.env.CONTACT_EMAIL],
+      replyTo: email,
+      subject: `New Contact from ${name}`,
+      html: `
+        <h2>New Contact Message</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `
+    })
+    return { success: true }
+  } catch (error) {
+    console.error(error)
+    return { error: 'Failed to send message. Please try again.' }
+  }
 }
