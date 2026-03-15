@@ -424,7 +424,8 @@ const caseStudies = [
     ],
     tech: ["Node.js", "InfluxDB", "Grafana", "MQTT", "Python"]
   },
-  id: 31,
+  {
+    id: 31,
     title: "Data Center Migration & Consolidation (Privates)",
     year: "2016",
     category: "Infrastructure",
@@ -563,6 +564,7 @@ const caseStudies = [
     tech: ["AWS", "Cross-Region Replication", "Route 53", "ElastiCache", "RDS"]
   }
 
+  
 ]
 
 export default function Portfolio() {
