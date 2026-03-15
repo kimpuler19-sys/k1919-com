@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Navbar from '@/components/Navbar'
 
 export default function ServicesPage() {
   const [services, setServices] = useState([])
@@ -18,7 +19,6 @@ export default function ServicesPage() {
   }, [])
 
   const handleAction = (s) => {
-    // PRO services (>= 2000) -> consultation booking
     if (s.original_price >= 2000) {
       const consultationService = {
         title: `Consultation for ${s.title}`,
@@ -30,12 +30,10 @@ export default function ServicesPage() {
       setSelectedService(consultationService)
       setShowModal(true)
     }
-    // Large but not PRO (1000-1999) -> WhatsApp discussion
     else if (s.original_price >= 1000) {
       const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`)
       window.open(`https://wa.me/6283841632837?text=${message}`, '_blank')
     }
-    // Smaller services -> direct order modal
     else {
       setSelectedService(s)
       setShowModal(true)
@@ -110,20 +108,8 @@ export default function ServicesPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Navigation */}
-        <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
-          <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/services" className="text-purple-400 border-b-2 border-purple-500 pb-1 text-sm uppercase tracking-wider">Services</Link>
-            <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
-            <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
-            <Link href="/how-it-works" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">How It Works</Link>
-            <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
-            <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
-            <Link href="/contact" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Contact</Link>
-            <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
-          </div>
-        </nav>
+        {/* Navbar */}
+        <Navbar />
 
         {/* Header */}
         <header className="mb-16">
