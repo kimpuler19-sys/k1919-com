@@ -1,19 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-
+import { Inter } from 'next/font/google'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import './globals.css'
 
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        {children}
-        <FloatingWhatsApp />
-      </body>
-    </html>
-  )
-}
+const inter = Inter({ subsets: ['latin'] })
+
 
 
 const geistSans = Geist({
@@ -42,7 +35,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+                <FloatingWhatsApp />
         {children}
+         
       </body>
     </html>
   );
