@@ -583,7 +583,7 @@ export default function Portfolio() {
 
         <header className="mb-16">
           <h1 className="text-5xl font-black text-white mb-6">Project Portfolio</h1>
-          <p className="text-xl text-slate-400 max-w-3xl">30+ private projects spanning 2011–2026. All client details are confidential, but the results speak for themselves.</p>
+          <p className="text-xl text-slate-400 max-w-3xl">Special private projects spanning 2011–2026. All client details are confidential, but the results speak for themselves.</p>
         </header>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
