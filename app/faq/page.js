@@ -1,6 +1,4 @@
-// app/faq/page.js
 'use client'
-
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -36,6 +34,27 @@ const faqs = [
   {
     question: "Do you sign NDAs or work under contract?",
     answer: "Yes, we're comfortable with NDAs and formal contracts. We want you to feel secure in our partnership."
+  },
+  // Pertanyaan baru
+  {
+    question: "How long does a typical project take?",
+    answer: "It depends on complexity. A simple website can take 2-4 weeks, while complex web applications may take 2-6 months. We'll provide a detailed timeline in our proposal."
+  },
+  {
+    question: "What happens if the project takes longer than expected?",
+    answer: "We always build buffers into our timelines. If unforeseen issues arise, we'll communicate immediately and work with you to adjust scope or timeline. Our goal is to deliver quality, not just speed."
+  },
+  {
+    question: "Can I see examples of your work?",
+    answer: "Yes! Visit our Portfolio page to see a selection of 30+ private projects across various industries. We can also share more relevant case studies upon request."
+  },
+  {
+    question: "Do you offer discounts for long-term partnerships?",
+    answer: "Yes! Clients on a monthly retainer enjoy discounted hourly rates and priority access. Contact us to discuss a custom package."
+  },
+  {
+    question: "What if I'm not satisfied with the work?",
+    answer: "Your satisfaction is our priority. We offer revision cycles and work closely with you to ensure the final product meets your expectations. If issues persist, we have a fair dispute resolution process."
   }
 ]
 
@@ -86,9 +105,9 @@ export default function FAQ() {
         <div className="mt-16 p-8 bg-purple-900/20 rounded-3xl border border-purple-500/30 text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Still have questions?</h2>
           <p className="text-slate-300 mb-6">We're happy to answer any additional questions personally.</p>
-          <a href="https://wa.me/6283841632837" target="_blank" className="inline-block bg-purple-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 transition shadow-xl">
-            Chat on WhatsApp
-          </a>
+          <Link href="/contact" className="inline-block bg-purple-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] hover:bg-purple-500 transition shadow-xl">
+            Contact Us
+          </Link>
         </div>
       </div>
     </div>

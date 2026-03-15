@@ -1,6 +1,21 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <FloatingWhatsApp />
+      </body>
+    </html>
+  )
+}
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
