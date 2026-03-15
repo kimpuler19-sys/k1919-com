@@ -1,13 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import "./globals.css";
-
-import { Inter } from 'next/font/google'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp'
-import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
-
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,23 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Kimpuler Design Digital Solution",
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-  },
   description: "Full-Stack Solutions: Web Development, DBA, Crypto Solutions, and Professional Live Commerce Hosting.",
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-                <FloatingWhatsApp />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <FloatingWhatsApp />
         {children}
-         
       </body>
     </html>
   );
