@@ -423,7 +423,146 @@ const caseStudies = [
       "Integrated anomaly detection using machine learning"
     ],
     tech: ["Node.js", "InfluxDB", "Grafana", "MQTT", "Python"]
+  },
+  id: 31,
+    title: "Data Center Migration & Consolidation (Privates)",
+    year: "2016",
+    category: "Infrastructure",
+    points: [
+      "Led migration of 50+ physical servers to virtualized environment using VMware vSphere",
+      "Consolidated 3 legacy data centers into 2 modern facilities with zero downtime",
+      "Designed disaster recovery strategy with RPO of 1 hour and RTO of 4 hours",
+      "Implemented network segmentation and VLAN architecture for improved security"
+    ],
+    tech: ["VMware vSphere", "Cisco Networking", "SAN Storage", "Veeam Backup"]
+  },
+  // 32. 2017 - Database Administration for High-Traffic E-commerce
+  {
+    id: 32,
+    title: "Database Administration for High-Traffic E-commerce (Privates)",
+    year: "2017",
+    category: "Database Administration",
+    points: [
+      "Managed 200+ MySQL and PostgreSQL database instances supporting 1M+ daily transactions",
+      "Implemented automated monitoring and alerting using customized scripts [citation:2]",
+      "Optimized slow queries reducing average response time from 2.5s to 300ms",
+      "Designed backup strategy with point-in-time recovery and daily verification"
+    ],
+    tech: ["MySQL", "PostgreSQL", "Percona Toolkit", "pt-query-digest", "Bash"]
+  },
+  // 33. 2018 - AWS Cloud Migration for Financial Services
+  {
+    id: 33,
+    title: "AWS Cloud Migration for Financial Services (Privates)",
+    year: "2018",
+    category: "Cloud Computing",
+    points: [
+      "Migrated 30+ mission-critical applications from on-premise to AWS using lift-and-shift strategy",
+      "Designed multi-AZ architecture achieving 99.99% availability for production workloads [citation:8]",
+      "Implemented infrastructure as code using AWS CloudFormation for reproducible deployments [citation:3]",
+      "Established cost optimization framework reducing monthly cloud spend by 35%"
+    ],
+    tech: ["AWS EC2", "RDS", "S3", "CloudFormation", "VPC", "IAM"]
+  },
+  // 34. 2019 - DigitalOcean Infrastructure Optimization
+  {
+    id: 34,
+    title: "DigitalOcean Infrastructure Optimization (Privates)",
+    year: "2019",
+    category: "Cloud Hosting",
+    points: [
+      "Architected scalable infrastructure handling 500K+ monthly visitors on DigitalOcean droplets",
+      "Implemented load balancing across multiple droplets for high availability",
+      "Configured automated backups and snapshots with 30-day retention policy",
+      "Optimized server configurations reducing response time by 60%"
+    ],
+    tech: ["DigitalOcean", "Nginx", "Load Balancing", "Let's Encrypt", "MariaDB"]
+  },
+  // 35. 2020 - cPanel Server Hardening & Security
+  {
+    id: 35,
+    title: "cPanel Server Hardening & Security (Privates)",
+    year: "2020",
+    category: "Server Security",
+    points: [
+      "Hardened 25+ cPanel/WHM servers following industry security benchmarks [citation:5]",
+      "Implemented CSF (ConfigServer Security & Firewall) with custom rules for DDoS protection [citation:10]",
+      "Enforced two-factor authentication for all administrative accounts",
+      "Configured automated malware scanning with ClamAV and daily security reports"
+    ],
+    tech: ["cPanel/WHM", "CSF/LFD", "ModSecurity", "ClamAV", "Fail2Ban"]
+  },
+  // 36. 2021 - Cloudflare CDN & WAF Implementation
+  {
+    id: 36,
+    title: "Cloudflare CDN & WAF Implementation (Privates)",
+    year: "2021",
+    category: "CDN & Security",
+    points: [
+      "Implemented Cloudflare CDN for 50+ websites, reducing global latency by 70% [citation:4]",
+      "Configured Web Application Firewall (WAF) with custom rules blocking 10K+ malicious requests daily",
+      "Set up DNS management with DNSSEC and DDoS protection absorbing multi-Gbps attacks [citation:9]",
+      "Optimized caching strategies improving cache hit ratio to 85%"
+    ],
+    tech: ["Cloudflare CDN", "WAF", "DNS Management", "DDoS Protection", "Page Rules"]
+  },
+  // 37. 2022 - Hybrid Cloud Architecture with AWS & On-Premise
+  {
+    id: 37,
+    title: "Hybrid Cloud Architecture with AWS & On-Premise (Privates)",
+    year: "2022",
+    category: "Cloud Architecture",
+    points: [
+      "Designed hybrid cloud solution connecting on-premise data center with AWS via VPN",
+      "Implemented automated failover between environments achieving RTO of 15 minutes [citation:3]",
+      "Set up cross-region replication for disaster recovery with pilot-light architecture",
+      "Established unified monitoring across hybrid infrastructure using CloudWatch and on-premise tools"
+    ],
+    tech: ["AWS Direct Connect", "VPN", "Route 53", "Elastic DR", "Terraform"]
+  },
+  // 38. 2023 - Enterprise Database Automation at Scale
+  {
+    id: 38,
+    title: "Enterprise Database Automation at Scale (Privates)",
+    year: "2023",
+    category: "Database Automation",
+    points: [
+      "Automated management of 300+ database instances using ClusterControl platform [citation:7]",
+      "Implemented self-service database provisioning reducing deployment time from weeks to hours",
+      "Configured automated failover and high availability for critical production databases",
+      "Established centralized monitoring and alerting with custom dashboards"
+    ],
+    tech: ["ClusterControl", "MySQL", "MongoDB", "Redis", "Grafana", "Prometheus"]
+  },
+  // 39. 2024 - Photoshop & Frontend Design System
+  {
+    id: 39,
+    title: "Photoshop & Frontend Design System (Privates)",
+    year: "2024",
+    category: "UI/UX Design",
+    points: [
+      "Created comprehensive design system in Photoshop including 100+ UI components",
+      "Developed responsive frontend with Tailwind CSS ensuring pixel-perfect implementation",
+      "Designed and optimized all visual assets including icons, illustrations, and marketing materials",
+      "Established brand guidelines with consistent typography, color palette, and spacing system"
+    ],
+    tech: ["Adobe Photoshop", "Figma", "Tailwind CSS", "React", "Framer Motion"]
+  },
+  // 40. 2025 - Multi-Region Disaster Recovery Architecture
+  {
+    id: 40,
+    title: "Multi-Region Disaster Recovery Architecture (Privates)",
+    year: "2025",
+    category: "Disaster Recovery",
+    points: [
+      "Designed multi-region active-passive DR architecture across AWS Singapore and Hong Kong [citation:3]",
+      "Implemented automated cross-region replication for all critical data stores",
+      "Conducted quarterly DR drills achieving consistent RPO of 1 hour and RTO of 2 hours",
+      "Established comprehensive runbooks and automated failover procedures"
+    ],
+    tech: ["AWS", "Cross-Region Replication", "Route 53", "ElastiCache", "RDS"]
   }
+
 ]
 
 export default function Portfolio() {
