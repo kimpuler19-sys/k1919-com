@@ -18,10 +18,25 @@ export default function ServicesPage() {
   }, [])
 
   const handleAction = (s) => {
-    if (s.original_price >= 1000) {
+    // PRO services (>= 2000) -> consultation booking
+    if (s.original_price >= 2000) {
+      const consultationService = {
+        title: `Consultation for ${s.title}`,
+        original_price: 50,
+        price: 50,
+        paypal_val: "50",
+        desc: "One-hour paid consultation to discuss your project needs, provide expert advice, and scope out a custom solution. Fee is credited towards project if you proceed."
+      }
+      setSelectedService(consultationService)
+      setShowModal(true)
+    }
+    // Large but not PRO (1000-1999) -> WhatsApp discussion
+    else if (s.original_price >= 1000) {
       const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`)
       window.open(`https://wa.me/6283841632837?text=${message}`, '_blank')
-    } else {
+    }
+    // Smaller services -> direct order modal
+    else {
       setSelectedService(s)
       setShowModal(true)
     }
@@ -45,9 +60,11 @@ export default function ServicesPage() {
   }
 
   const getShortBenefit = (title) => {
+    if (title.includes("Consultation")) return "Let's discuss your project in detail and get expert advice."
+    if (title.includes("Python Development")) return "Kickstart your Python project with a discovery session."
+    if (title.includes("Data Engineering")) return "Let's discuss your data challenges and automation needs."
     if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models."
     if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems."
-    if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights."
     if (title.includes("Machine Learning")) return "Predict outcomes before they happen."
     if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks."
     if (title.includes("API Development")) return "Connect your entire software ecosystem seamlessly."
@@ -67,8 +84,6 @@ export default function ServicesPage() {
     if (title.includes("Solana")) return "Enterprise-grade blockchain solutions."
     if (title.includes("Weekly PHP Maintenance")) return "Keep your PHP application fresh and secure with weekly dedicated hours."
     if (title.includes("Custom PHP Dashboard")) return "Get a fully functional dashboard with server, backed by 1 year of support."
-    if (title.includes("Python Development & AI Integration")) return "Kickstart your Python project with a discovery session."
-    if (title.includes("Data Engineering & Automation (Python)")) return "Let's discuss your data challenges and automation needs."
     return "Tailored solution for your business needs."
   }
 
@@ -95,13 +110,14 @@ export default function ServicesPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16">
+        {/* Navigation */}
         <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
           <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
           <div className="flex gap-6 items-center">
             <Link href="/services" className="text-purple-400 border-b-2 border-purple-500 pb-1 text-sm uppercase tracking-wider">Services</Link>
             <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
             <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
-            <Link href="/rewards" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Rewards</Link>
+            <Link href="/how-it-works" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">How It Works</Link>
             <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
             <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
             <Link href="/contact" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Contact</Link>
@@ -109,6 +125,7 @@ export default function ServicesPage() {
           </div>
         </nav>
 
+        {/* Header */}
         <header className="mb-16">
           <h1 className="text-5xl font-black text-white mb-6">Our Services</h1>
           <p className="text-xl text-slate-400 max-w-3xl">
@@ -116,18 +133,19 @@ export default function ServicesPage() {
           </p>
         </header>
 
+        {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {services.map((s, i) => {
-            const isRecommended = s.original_price >= 2000
+            const isPro = s.original_price >= 2000
             const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
             const shortBenefit = getShortBenefit(s.title)
             const borderClass = getBorderClass(s.title, s.original_price)
             return (
-              <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${borderClass} ${isRecommended ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 scale-[1.02] z-10' : 'bg-slate-900/30'}`}>
+              <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${borderClass} ${isPro ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 scale-[1.02] z-10' : 'bg-slate-900/30'}`}>
                 <div className="text-left">
                   <div className="flex justify-between items-center mb-4">
-                    <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isRecommended ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
-                      {isRecommended ? '★ 2026 PRO' : 'ESSENTIAL'}
+                    <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isPro ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
+                      {isPro ? '★ 2026 PRO' : 'ESSENTIAL'}
                     </span>
                     <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                   </div>
@@ -138,27 +156,45 @@ export default function ServicesPage() {
                 <div className="mt-auto pt-6 border-t border-white/5">
                   <div className="mb-4 text-left">
                     <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment (USD)</span>
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
-                      {s.original_price && s.original_price > s.price && (
-                        <>
-                          <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
-                          <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
-                        </>
-                      )}
-                    </div>
+                    {isPro ? (
+                      <div className="text-4xl font-black text-white tracking-tighter">Custom Quote</div>
+                    ) : (
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
+                        {s.original_price && s.original_price > s.price && (
+                          <>
+                            <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
+                            <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isRecommended ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
-                    {s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
+                  <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isPro ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : s.original_price >= 1000 ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                    {isPro ? 'Book Consultation ($50)' : s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
                   </button>
                 </div>
               </div>
             )
           })}
         </div>
+
+        {/* Footer */}
+        <footer className="mt-48 py-20 border-t border-white/5 text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase font-bold flex flex-col md:flex-row justify-between items-center gap-10">
+          <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
+          <div className="flex gap-10">
+            <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
+            <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
+            <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
+            <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
+            <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+            <Link href="/contact" className="text-slate-500 hover:text-white">Contact</Link>
+            <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
+          </div>
+        </footer>
       </div>
 
-      {/* Modal Order (sama seperti di homepage) */}
+      {/* Modal Order */}
       {showModal && selectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
           <div className="bg-slate-950 border border-white/10 w-full max-w-xl p-10 rounded-[3rem] shadow-2xl relative overflow-y-auto max-h-[90vh]">

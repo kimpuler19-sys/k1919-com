@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { blogPosts } from './blog/data'
+import Navbar from '@/components/Navbar'
 
 export default function Home() {
   const [services, setServices] = useState([])
@@ -19,10 +20,25 @@ export default function Home() {
   }, [])
 
   const handleAction = (s) => {
-    if (s.original_price >= 1000) {
+    // PRO services (>= 2000) -> consultation booking
+    if (s.original_price >= 2000) {
+      const consultationService = {
+        title: `Consultation for ${s.title}`,
+        original_price: 50,
+        price: 50,
+        paypal_val: "50",
+        desc: "One-hour paid consultation to discuss your project needs, provide expert advice, and scope out a custom solution. Fee is credited towards project if you proceed."
+      }
+      setSelectedService(consultationService)
+      setShowModal(true)
+    }
+    // Large but not PRO (1000-1999) -> WhatsApp discussion
+    else if (s.original_price >= 1000) {
       const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`)
       window.open(`https://wa.me/6283841632837?text=${message}`, '_blank')
-    } else {
+    }
+    // Smaller services -> direct order modal
+    else {
       setSelectedService(s)
       setShowModal(true)
     }
@@ -73,11 +89,11 @@ export default function Home() {
   ]
 
   const getShortBenefit = (title) => {
+    if (title.includes("Consultation")) return "Let's discuss your project in detail and get expert advice."
     if (title.includes("Python Development")) return "Kickstart your Python project with a discovery session."
     if (title.includes("Data Engineering")) return "Let's discuss your data challenges and automation needs."
     if (title.includes("AI & LLM")) return "Private AI trained on YOUR data, not generic models."
     if (title.includes("Python Web")) return "Scalable, secure, and production-ready backend systems."
-    if (title.includes("Data Engineering")) return "Turn raw data into business-ready insights."
     if (title.includes("Machine Learning")) return "Predict outcomes before they happen."
     if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks."
     if (title.includes("API Development")) return "Connect your entire software ecosystem seamlessly."
@@ -105,17 +121,13 @@ export default function Home() {
     return Math.round(((original - current) / original) * 100)
   }
 
-  // Fungsi untuk menentukan kelas border berdasarkan judul layanan
   const getBorderClass = (title, original_price) => {
-    // 2026 PRO (harga >= 2000) dapat border ungu terang (seperti sebelumnya)
     if (original_price >= 2000) {
-      return "border-purple-500 shadow-2xl" // atau kelas yang sama dengan sebelumnya
+      return "border-purple-500 shadow-2xl"
     }
-    // PHP services dapat border orange gelap
     if (title.includes("PHP")) {
-      return "border-orange-700 border-2" // orange gelap dengan ketebalan 2
+      return "border-orange-700 border-2"
     }
-    // Layanan lainnya (termasuk Python yang $50) dapat border abu-abu standar
     return "border-white/5 hover:border-purple-500/30"
   }
 
@@ -127,20 +139,8 @@ export default function Home() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Navigation */}
-        <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
-          <Link href="/" className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">KIMPULER</Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/services" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Services</Link>
-            <Link href="/about" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">About</Link>
-            <Link href="/portfolio" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Portfolio</Link>
-            <Link href="/how-it-works" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">How It Works</Link>
-            <Link href="/faq" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">FAQ</Link>
-            <Link href="/blog" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Blog</Link>
-            <Link href="/contact" className="text-white/70 hover:text-white transition text-sm uppercase tracking-wider">Contact</Link>
-            <a href="https://wa.me/6283841632837" target="_blank" className="bg-white text-black px-6 py-2 rounded-full font-black hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest text-[10px]">Let's Talk</a>
-          </div>
-        </nav>
+        {/* Navbar */}
+        <Navbar />
 
         {/* Hero Section */}
         <header className="max-w-5xl mb-24 text-left">
@@ -183,12 +183,10 @@ export default function Home() {
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Solutions for <span className="text-purple-500">2026 & Beyond</span></h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map((s, i) => {
-              const isRecommended = s.original_price >= 2000
+              const isPro = s.original_price >= 2000
               const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
               const shortBenefit = getShortBenefit(s.title)
               const borderClass = getBorderClass(s.title, s.original_price)
-              // Untuk 2026 PRO, kita tetap pakai gradient background, tapi border sudah diatur di getBorderClass
-              const isPro = s.original_price >= 2000
               return (
                 <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${borderClass} ${isPro ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 scale-[1.02] z-10' : 'bg-slate-900/30'}`}>
                   <div className="text-left">
@@ -205,18 +203,22 @@ export default function Home() {
                   <div className="mt-auto pt-6 border-t border-white/5">
                     <div className="mb-4 text-left">
                       <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment (USD)</span>
-                      <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
-                        {s.original_price && s.original_price > s.price && (
-                          <>
-                            <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
-                            <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
-                          </>
-                        )}
-                      </div>
+                      {isPro ? (
+                        <div className="text-4xl font-black text-white tracking-tighter">Custom Quote</div>
+                      ) : (
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
+                          {s.original_price && s.original_price > s.price && (
+                            <>
+                              <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
+                              <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isPro ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : 'bg-white/10 text-white hover:bg-white/20'}`}>
-                      {s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
+                    <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isPro ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : s.original_price >= 1000 ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                      {isPro ? 'Book Consultation ($50)' : s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
                     </button>
                   </div>
                 </div>
