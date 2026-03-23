@@ -21,10 +21,10 @@ export default function About() {
           <h1 className="text-5xl font-black text-white mb-8">About Us & Our Mission</h1>
           
           <p className="text-slate-300 leading-relaxed">
-            We are not just freelancers; we are a technical partnership dedicated to helping businesses thrive in the digital age. 
-            With over a decade of combined experience spanning from PHP ecosystems to modern Jamstack and blockchain, we've learned 
-            that the best solutions come from deep collaboration and a genuine investment in your success.
+            "We are not just freelancers; we are a technical partnership dedicated to helping businesses thrive in the digital age. Under the leadership of Joko Nardi, an International IT Consultant and Leadership of Kimpuler Design, we bring over a decade of combined experience—from PHP ecosystems to modern Jamstack and blockchain.
+Beyond technical development, we are deeply committed to empowering the next generation through education. We have actively contributed to the academic world by teaching and mentoring, sharing our industry expertise to bridge the gap between theory and practice. Furthermore, we specialize in delivering scalable SaaS (Software as a Service) solutions designed to solve complex business challenges.
           </p>
+
 
           <h2 className="text-3xl font-bold text-white mt-12 mb-4">Our Journey</h2>
           <p className="text-slate-300">
