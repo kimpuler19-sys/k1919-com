@@ -1,0 +1,272 @@
+'use client'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Navbar from '@/components/Navbar'
+
+export default function ServicesPage() {
+  const [services, setServices] = useState([])
+  const [selectedService, setSelectedService] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', desc: '', captcha: '' })
+  const [captchaValue, setCaptchaValue] = useState(0)
+
+  useEffect(() => {
+    fetch('/api/services')
+      .then(res => res.json())
+      .then(json => setServices(json))
+      .catch(err => console.error(err))
+    setCaptchaValue(Math.floor(Math.random() * 80) + 10)
+  }, [])
+
+  const handleAction = (s) => {
+    // PRO services (>= 2000) -> consultation booking
+    if (s.original_price >= 2000) {
+      const consultationService = {
+        title: `Consultation for ${s.title}`,
+        original_price: 50,
+        price: 50,
+        paypal_val: "50",
+        desc: "One-hour paid consultation to discuss your project needs, provide expert advice, and scope out a custom solution. Fee is credited towards project if you proceed."
+      }
+      setSelectedService(consultationService)
+      setShowModal(true)
+    }
+    // Large but not PRO (1000-1999) -> WhatsApp discussion
+    else if (s.original_price >= 1000) {
+      const message = encodeURIComponent(`Hi, I'm interested in your package: ${s.title}. Let's discuss my project.`)
+      window.open(`https://wa.me/6283841632837?text=${message}`, '_blank')
+    }
+    // Smaller services -> direct order modal
+    else {
+      setSelectedService(s)
+      setShowModal(true)
+    }
+  }
+
+  const handlePayment = (e) => {
+    e.preventDefault()
+    if (parseInt(formData.captcha) !== captchaValue + 5) { alert("Security Check Failed!"); return }
+    const paypalEmail = "jokonardi@gmail.com"
+    const orderNote = `Order: ${selectedService.title} | Client: ${formData.name} | WA: ${formData.phone} | Email: ${formData.email} | Project: ${formData.desc}`
+    const baseUrl = "https://www.paypal.com/cgi-bin/webscr"
+    const params = new URLSearchParams({
+      cmd: "_xclick",
+      business: paypalEmail,
+      item_name: orderNote.substring(0, 120),
+      amount: selectedService.paypal_val,
+      currency_code: "USD",
+    })
+    window.open(`${baseUrl}?${params.toString()}`, '_blank')
+    setShowModal(false)
+  }
+
+  const getShortBenefit = (title) => {
+    if (title.includes("Consultation")) return "Let's discuss your project in detail and get expert advice."
+    if (title.includes("AI Chatbot")) return "Automate customer support with intelligent conversations."
+    if (title.includes("AI Integration")) return "Connect your business with cutting-edge AI capabilities."
+    if (title.includes("AI Voice")) return "Add natural-sounding voice to your applications."
+    if (title.includes("Process Automation")) return "Save hundreds of hours on repetitive tasks."
+    if (title.includes("AI-Powered Analytics")) return "Predict outcomes and understand your customers better."
+    if (title.includes("AI Strategy")) return "Get expert guidance on your AI journey."
+    if (title.includes("Prompt Engineering")) return "Unlock the full potential of AI tools."
+    if (title.includes("Full-Stack")) return "End-to-end development with modern technologies."
+    if (title.includes("PHP")) return "Robust web applications with proven frameworks."
+    if (title.includes("API")) return "Seamless connections between your systems."
+    if (title.includes("E-commerce")) return "Sell online with powerful custom features."
+    if (title.includes("Dashboard")) return "Visualize your data and make informed decisions."
+    if (title.includes("Backend")) return "Scalable, secure server-side solutions."
+    if (title.includes("Database")) return "Optimize your data layer for speed and reliability."
+    if (title.includes("Legacy")) return "Modernize old code and improve performance."
+    if (title.includes("AWS")) return "Enterprise-grade cloud infrastructure."
+    if (title.includes("DevOps")) return "Streamline your development and deployment."
+    if (title.includes("DigitalOcean")) return "Cost-effective cloud hosting optimized."
+    if (title.includes("Server Hardening")) return "Protect your servers from threats."
+    if (title.includes("Cloudflare")) return "Speed up and secure your website globally."
+    if (title.includes("Speed")) return "Convert more visitors with lightning-fast pages."
+    if (title.includes("Monitoring")) return "Keep your systems running smoothly 24/7."
+    if (title.includes("Solana")) return "Enterprise-grade blockchain solutions."
+    if (title.includes("Crypto Trading")) return "Automate your cryptocurrency trading."
+    if (title.includes("Maintenance")) return "Sleep better at night – your site is always safe."
+    if (title.includes("Developer Time")) return "Dedicated hours for your most important tasks."
+    if (title.includes("Retainer")) return "A true technical partner, always on your side."
+    return "Tailored solution for your business needs."
+  }
+
+  const calculateDiscountPercent = (original, current) => {
+    if (!original || original <= current) return null
+    return Math.round(((original - current) / original) * 100)
+  }
+
+  const getBorderClass = (title, original_price, category) => {
+    // 2026 PRO (>= 2000) -> purple border
+    if (original_price >= 2000) {
+      return "border-purple-500 shadow-2xl"
+    }
+    // AI & Automation -> teal border
+    if (category === "AI & Automation") {
+      return "border-teal-500 border-2"
+    }
+    // Infrastructure -> blue border
+    if (category === "Infrastructure") {
+      return "border-blue-500 border-2"
+    }
+    // Core Development -> indigo border
+    if (category === "Core Development") {
+      return "border-indigo-500 border-2"
+    }
+    // Blockchain -> orange border (already handled)
+    if (title.includes("Solana") || title.includes("Crypto")) {
+      return "border-orange-700 border-2"
+    }
+    // Maintenance -> green border
+    if (category === "Maintenance") {
+      return "border-green-600 border-2"
+    }
+    return "border-white/5 hover:border-purple-500/30"
+  }
+
+  // Group services by category
+  const groupedServices = services.reduce((acc, service) => {
+    const category = service.category || "Other"
+    if (!acc[category]) {
+      acc[category] = []
+    }
+    acc[category].push(service)
+    return acc
+  }, {})
+
+  // Define category order and display names
+  const categoryOrder = [
+    { key: "Core Development", name: "🖥️ Core Development Services", icon: "💻" },
+    { key: "AI & Automation", name: "🤖 AI & Automation Services (Trending 2026)", icon: "⚡" },
+    { key: "Infrastructure", name: "☁️ Infrastructure & Optimization", icon: "🔧" },
+    { key: "Blockchain", name: "🔗 Blockchain & Crypto Solutions", icon: "⛓️" },
+    { key: "Maintenance", name: "🛡️ Maintenance & Support", icon: "🔒" }
+  ]
+
+  return (
+    <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 blur-[150px] rounded-full"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 blur-[150px] rounded-full"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <Navbar />
+
+        <header className="mb-16">
+          <h1 className="text-5xl font-black text-white mb-6">Our Services</h1>
+          <p className="text-xl text-slate-400 max-w-3xl">
+            We offer comprehensive development solutions across web, AI, cloud infrastructure, and blockchain. 
+            All services include a free initial consultation and 30 days of post-launch support.
+          </p>
+        </header>
+
+        {/* Services by Category */}
+        {categoryOrder.map((category) => {
+          const categoryServices = groupedServices[category.key] || []
+          if (categoryServices.length === 0) return null
+
+          return (
+            <section key={category.key} className="mb-20">
+              <div className="flex items-center gap-3 mb-10">
+                <span className="text-3xl">{category.icon}</span>
+                <h2 className="text-3xl font-black text-white uppercase tracking-tighter">
+                  {category.name}
+                </h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                {categoryServices.map((s, i) => {
+                  const isPro = s.original_price >= 2000
+                  const discountPercent = s.original_price ? calculateDiscountPercent(s.original_price, s.price) : null
+                  const shortBenefit = getShortBenefit(s.title)
+                  const borderClass = getBorderClass(s.title, s.original_price, s.category)
+                  return (
+                    <div key={i} className={`group p-8 rounded-[2.5rem] border transition-all duration-500 flex flex-col justify-between ${borderClass} ${isPro ? 'bg-gradient-to-br from-purple-900/40 to-slate-900/60 scale-[1.02] z-10' : 'bg-slate-900/30'}`}>
+                      <div className="text-left">
+                        <div className="flex justify-between items-center mb-4">
+                          <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${isPro ? 'bg-purple-500 text-white' : 'bg-white/5 text-purple-400'}`}>
+                            {isPro ? '★ 2026 PRO' : 'ESSENTIAL'}
+                          </span>
+                          <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</h3>
+                        <p className="text-purple-400 text-sm font-semibold mb-2 italic">✨ {shortBenefit}</p>
+                        <p className="text-slate-400 text-xs leading-relaxed opacity-80 min-h-[70px]">{s.desc}</p>
+                      </div>
+                      <div className="mt-auto pt-6 border-t border-white/5">
+                        <div className="mb-4 text-left">
+                          <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment (USD)</span>
+                          {isPro ? (
+                            <div className="text-4xl font-black text-white tracking-tighter">Custom Quote</div>
+                          ) : (
+                            <div className="flex items-baseline gap-2 flex-wrap">
+                              <span className="text-4xl font-black text-white tracking-tighter">${s.price}</span>
+                              {s.original_price && s.original_price > s.price && (
+                                <>
+                                  <span className="text-lg text-slate-500 line-through">${s.original_price}</span>
+                                  <span className="text-xs font-bold text-green-400 bg-green-900/50 px-2 py-1 rounded-full">-{discountPercent}%</span>
+                                </>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <button onClick={() => handleAction(s)} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all active:scale-95 ${isPro ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-xl' : s.original_price >= 1000 ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                          {isPro ? 'Book Consultation ($50)' : s.original_price >= 1000 ? 'Let\'s Discuss →' : 'Select & Continue'}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+          )
+        })}
+
+        <footer className="mt-48 py-20 border-t border-white/5 text-slate-600 text-[10px] font-mono tracking-[0.3em] uppercase font-bold flex flex-col md:flex-row justify-between items-center gap-10">
+          <p>© 2026 KIMPULER.COM — GLOBAL REMOTE OPERATIONS</p>
+          <div className="flex gap-10">
+            <Link href="/about" className="text-slate-500 hover:text-white">About</Link>
+            <Link href="/portfolio" className="text-slate-500 hover:text-white">Portfolio</Link>
+            <Link href="/faq" className="text-slate-500 hover:text-white">FAQ</Link>
+            <Link href="/blog" className="text-slate-500 hover:text-white">Blog</Link>
+            <a href="/terms" className="text-purple-500 hover:text-white">Terms</a>
+            <Link href="/contact" className="text-slate-500 hover:text-white">Contact</Link>
+            <a href="https://wa.me/6283841632837" className="text-emerald-400 animate-pulse">Consult</a>
+          </div>
+        </footer>
+      </div>
+
+      {/* Modal Order (sama seperti sebelumnya) */}
+      {showModal && selectedService && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+          <div className="bg-slate-950 border border-white/10 w-full max-w-xl p-10 rounded-[3rem] shadow-2xl relative overflow-y-auto max-h-[90vh]">
+            <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-6 text-left text-white uppercase">
+              <h2 className="text-xl font-black italic tracking-widest">Order Details</h2>
+              <button onClick={() => setShowModal(false)} className="text-slate-500 hover:text-white transition text-2xl">✕</button>
+            </div>
+            <form onSubmit={handlePayment} className="space-y-4 text-left">
+              <input required placeholder="Your Name" className="bg-white/5 border border-white/10 p-4 rounded-xl w-full focus:border-purple-500 outline-none transition" onChange={e => setFormData({...formData, name: e.target.value})} />
+              <input required type="email" placeholder="Your Email" className="bg-white/5 border border-white/10 p-4 rounded-xl w-full focus:border-purple-500 outline-none transition" onChange={e => setFormData({...formData, email: e.target.value})} />
+              <input required type="tel" placeholder="WhatsApp Number" className="bg-white/5 border border-white/10 p-4 rounded-xl w-full focus:border-purple-500 outline-none transition" onChange={e => setFormData({...formData, phone: e.target.value})} />
+              <textarea required placeholder="Project Description" className="bg-white/5 border border-white/10 p-4 rounded-xl w-full h-28 focus:border-purple-500 outline-none transition resize-none" onChange={e => setFormData({...formData, desc: e.target.value})}></textarea>
+              
+              <div className="p-4 bg-purple-500/10 rounded-xl flex items-center justify-between border border-purple-500/20 font-mono text-[10px]">
+                <span className="text-purple-400 uppercase">Security Check: {captchaValue} + 5 = ?</span>
+                <input required type="number" className="bg-black/40 border border-purple-500/30 p-2 rounded-lg w-20 text-center text-white" onChange={e => setFormData({...formData, captcha: e.target.value})} />
+              </div>
+
+              <div className="pt-4">
+                <button type="submit" className="w-full py-6 bg-purple-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.4em] hover:bg-purple-500 shadow-2xl">Confirm & Pay via PayPal</button>
+                <p className="text-[9px] text-slate-600 text-center mt-4 tracking-widest uppercase">
+                  By clicking, you agree to our <a href="/terms" className="text-purple-500 underline">Terms of Service</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
