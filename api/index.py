@@ -224,6 +224,41 @@ def get_services():
             "paypal_val": "2400",
             "desc": "Automated trading bots with GRID/DCA strategies, exchange API integration (Binance, Coinbase), and backtesting engine."
         },
+
+        # == ai 
+ {
+        "title": "🛡️ Private AI & On-Premise Deployment",
+        "category": "AI & Infrastructure",
+        "original_price": 1800,
+        "price": 1500,
+        "paypal_val": "1500",
+        "desc": "Host secure open-source LLMs (Llama 3/Mistral) locally or in your private cloud using vLLM & Docker. 100% data privacy with zero token-leakage risk."
+    },
+    {
+        "title": "📊 Custom Enterprise RAG Engine",
+        "category": "AI & Knowledge Management",
+        "original_price": 600,
+        "price": 499,
+        "paypal_val": "499",
+        "desc": "Build a hyper-precise document intelligence system using LlamaIndex. Scan, summarize, and audit internal corporate PDFs/SOPs with strict source citation."
+    },
+    {
+        "title": "🤖 Autonomous AI QA & Pentesting Agent",
+        "category": "AI & Cybersecurity",
+        "original_price": 400,
+        "price": 299,
+        "paypal_val": "299",
+        "desc": "Inject stateful multi-agent systems (LangGraph) into your CI/CD pipeline. 24/7 automated code testing, vulnerability scans, and AI pull-request fixes."
+    },
+    {
+        "title": "⚙️ Enterprise Legacy Code Migration",
+        "category": "AI & Software Engineering",
+        "original_price": 4000,
+        "price": 3000,
+        "paypal_val": "3000",
+        "desc": "Refactor legacy systems (outdated PHP/Java/COBOL) into modern stacks like Next.js, TypeScript, and Go using advanced AI pipelines with built-in tests."
+    },
+
         
         # === 9. Maintenance & Support ===
         {
