@@ -196,7 +196,7 @@ export default function Home() {
                       </span>
                       <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</h3>
+                    <Link href={`/services/${encodeURIComponent(s.title)}`} className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</Link>
                     <p className="text-purple-400 text-sm font-semibold mb-2 italic">✨ {shortBenefit}</p>
                     <p className="text-slate-400 text-xs leading-relaxed opacity-80 min-h-[70px]">{s.desc}</p>
                   </div>

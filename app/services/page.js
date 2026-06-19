@@ -9,6 +9,17 @@ export default function ServicesPage() {
   const [showModal, setShowModal] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', desc: '', captcha: '' })
   const [captchaValue, setCaptchaValue] = useState(0)
+  const [routeTitle, setRouteTitle] = useState(null)
+  const [isDetailView, setIsDetailView] = useState(false)
+
+  useEffect(() => {
+    const path = typeof window !== 'undefined' ? decodeURIComponent(window.location.pathname) : ''
+    if (path.startsWith('/services/') && path !== '/services') {
+      const t = path.replace('/services/', '')
+      setRouteTitle(t)
+      setIsDetailView(true)
+    }
+  }, [])
 
   useEffect(() => {
     fetch('/api/services')
@@ -144,6 +155,46 @@ export default function ServicesPage() {
     { key: "Maintenance", name: "🛡️ Maintenance & Support", icon: "🔒" }
   ]
 
+  if (isDetailView) {
+    if (!services || services.length === 0) {
+      return (<div className="min-h-screen flex items-center justify-center text-white">Loading...</div>)
+    }
+    const svc = services.find(s => s.title === routeTitle || s.title === decodeURIComponent(routeTitle))
+    if (!svc) {
+      return (
+        <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-black text-white mb-4">Service not found</h2>
+            <Link href="/services" className="text-purple-400">← Back to services</Link>
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+        <div className="max-w-4xl mx-auto bg-slate-900/30 p-10 rounded-3xl border border-white/5">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-black">{svc.title}</h1>
+            <Link href="/services" className="text-purple-400">← Back</Link>
+          </div>
+          <p className="text-slate-400 mb-6">{svc.desc}</p>
+          <div className="mb-6">
+            <span className="text-slate-500 text-[9px] uppercase font-bold tracking-widest block mb-1 font-mono">Investment (USD)</span>
+            {svc.original_price && svc.original_price >= 2000 ? (
+              <div className="text-2xl font-black text-white">Custom Quote</div>
+            ) : (
+              <div className="text-2xl font-black text-white">${svc.price}</div>
+            )}
+          </div>
+          <div className="flex gap-4">
+            <a href={`https://wa.me/6283841632837?text=${encodeURIComponent(`Hi, I'm interested in your package: ${svc.title}. Let's discuss my project.`)}`} target="_blank" rel="noreferrer" className="py-3 px-6 bg-purple-600 rounded-xl font-bold">Discuss</a>
+            <a href={`https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=jokonardi%40gmail.com&item_name=${encodeURIComponent(svc.title)}&amount=${svc.paypal_val || svc.price || 0}&currency_code=USD`} target="_blank" rel="noreferrer" className="py-3 px-6 bg-white/10 rounded-xl font-bold">Pay via PayPal</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -191,7 +242,7 @@ export default function ServicesPage() {
                           </span>
                           <span className="text-slate-800 font-black text-4xl italic opacity-50">0{i+1}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</h3>
+                        <Link href={`/services/${encodeURIComponent(s.title)}`} className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition uppercase tracking-tight">{s.title}</Link>
                         <p className="text-purple-400 text-sm font-semibold mb-2 italic">✨ {shortBenefit}</p>
                         <p className="text-slate-400 text-xs leading-relaxed opacity-80 min-h-[70px]">{s.desc}</p>
                       </div>
