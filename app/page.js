@@ -180,6 +180,7 @@ export default function Home() {
 
         {/* Services Section */}
         <section className="mb-32">
+          
           <h2 className="text-4xl font-black text-white mb-12 uppercase tracking-tighter">Solutions for <span className="text-purple-500">2026 & Beyond</span></h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map((s, i) => {
