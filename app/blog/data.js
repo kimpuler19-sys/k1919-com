@@ -1,5 +1,5 @@
 export const blogPosts = [
-  const blogPosts = [
+  
   {
     slug: "vibe-coding-to-production-grade-systems",
     title: "Moving From 'Vibe Coding' to Production-Grade Systems: When Do You Need Real Developers?",
