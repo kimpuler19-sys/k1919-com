@@ -1,7 +1,7 @@
 // app/blog/BlogList.js
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -13,7 +13,40 @@ export default function BlogList({ posts, tags }) {
   const [activeTag, setActiveTag] = useState(initialTag)
   const [query, setQuery] = useState('')
 
-  // Filter logic
+  // ─────────────── SCROLL STATE FOR TAG BAR ───────────────
+  const scrollRef = useRef(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+
+  // Cek apakah tombol prev/next perlu diaktifkan
+  const updateScrollButtons = useCallback(() => {
+    const el = scrollRef.current
+    if (!el) return
+    setCanScrollLeft(el.scrollLeft > 4)
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4)
+  }, [])
+
+  useEffect(() => {
+    updateScrollButtons()
+    const el = scrollRef.current
+    if (!el) return
+    el.addEventListener('scroll', updateScrollButtons, { passive: true })
+    window.addEventListener('resize', updateScrollButtons)
+    return () => {
+      el.removeEventListener('scroll', updateScrollButtons)
+      window.removeEventListener('resize', updateScrollButtons)
+    }
+  }, [updateScrollButtons])
+
+  // Scroll sebesar ~80% lebar container
+  const scrollByAmount = (direction) => {
+    const el = scrollRef.current
+    if (!el) return
+    const amount = el.clientWidth * 0.8
+    el.scrollBy({ left: direction * amount, behavior: 'smooth' })
+  }
+
+  // ─────────────── FILTER LOGIC ───────────────
   const filtered = useMemo(() => {
     return posts.filter((post) => {
       const matchesTag = activeTag === 'All' || post.tags.includes(activeTag)
@@ -26,7 +59,6 @@ export default function BlogList({ posts, tags }) {
     })
   }, [posts, activeTag, query])
 
-  // Featured = newest 1 post (only when no filter applied)
   const featured = activeTag === 'All' && query === '' ? posts[0] : null
   const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered
 
@@ -40,7 +72,6 @@ export default function BlogList({ posts, tags }) {
   }
 
   return (
-    
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-purple-500/30">
       {/* Background blobs */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -105,31 +136,86 @@ export default function BlogList({ posts, tags }) {
             </svg>
           </div>
 
-          {/* Tag filter pills */}
-          <div className="flex flex-wrap gap-2">
+          {/* ─────── TAG FILTER — 1 LINE, HORIZONTAL SCROLL + PREV/NEXT ─────── */}
+          <div className="relative">
+            {/* Prev button (kiri) */}
             <button
-              onClick={() => handleTagClick('All')}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
-                activeTag === 'All'
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-white/5 text-slate-300 hover:bg-white/10'
-              }`}
+              onClick={() => scrollByAmount(-1)}
+              disabled={!canScrollLeft}
+              aria-label="Scroll tags left"
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center transition
+                ${
+                  canScrollLeft
+                    ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-lg shadow-purple-500/30'
+                    : 'bg-white/5 text-slate-600 cursor-not-allowed opacity-40'
+                }`}
             >
-              All ({posts.length})
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
-            {tags.map(({ name, count }) => (
+
+            {/* Next button (kanan) */}
+            <button
+              onClick={() => scrollByAmount(1)}
+              disabled={!canScrollRight}
+              aria-label="Scroll tags right"
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center transition
+                ${
+                  canScrollRight
+                    ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-lg shadow-purple-500/30'
+                    : 'bg-white/5 text-slate-600 cursor-not-allowed opacity-40'
+                }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Fade kiri (hanya saat bisa scroll kiri) */}
+            <div
+              className={`pointer-events-none absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-[#020617] to-transparent transition-opacity ${
+                canScrollLeft ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+
+            {/* Fade kanan */}
+            <div
+              className={`pointer-events-none absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-[#020617] to-transparent transition-opacity ${
+                canScrollRight ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+
+            {/* Scrollable tag row — 1 baris, no wrap */}
+            <div
+              ref={scrollRef}
+              className="flex gap-2 overflow-x-auto scrollbar-hide px-10 py-1"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
               <button
-                key={name}
-                onClick={() => handleTagClick(name)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
-                  activeTag === name
+                onClick={() => handleTagClick('All')}
+                className={`flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition ${
+                  activeTag === 'All'
                     ? 'bg-purple-600 text-white'
                     : 'bg-white/5 text-slate-300 hover:bg-white/10'
                 }`}
               >
-                {name} ({count})
+                All ({posts.length})
               </button>
-            ))}
+              {tags.map(({ name, count }) => (
+                <button
+                  key={name}
+                  onClick={() => handleTagClick(name)}
+                  className={`flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition ${
+                    activeTag === name
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                  }`}
+                >
+                  {name} ({count})
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Result count */}
@@ -142,10 +228,7 @@ export default function BlogList({ posts, tags }) {
 
         {/* ─────── FEATURED POST ─────── */}
         {featured && (
-          <Link
-            href={`/blog/${featured.slug}`}
-            className="block mb-12 group"
-          >
+          <Link href={`/blog/${featured.slug}`} className="block mb-12 group">
             <div className="relative bg-gradient-to-br from-purple-900/30 to-blue-900/20 p-8 md:p-12 rounded-3xl border border-purple-500/20 hover:border-purple-500/40 transition overflow-hidden">
               <div className="absolute top-4 right-4 bg-purple-500 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full">
                 Latest
@@ -190,11 +273,7 @@ export default function BlogList({ posts, tags }) {
         {rest.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {rest.map((post) => (
-              <Link
-                href={`/blog/${post.slug}`}
-                key={post.slug}
-                className="group"
-              >
+              <Link href={`/blog/${post.slug}`} key={post.slug} className="group">
                 <article className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition h-full flex flex-col">
                   <div className="flex justify-between items-center mb-4">
                     <time
