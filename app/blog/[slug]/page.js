@@ -14,7 +14,8 @@ export async function generateStaticParams() {
 // DYNAMIC METADATA — full SEO: title, description, canonical, OG, Twitter
 // ────────────────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+  const { slug } = await params
+  const post = blogPosts.find((p) => p.slug === slug)
   if (!post) return {}
 
   const baseUrl = 'https://kimpuler.com'
@@ -71,8 +72,9 @@ export async function generateMetadata({ params }) {
 // ────────────────────────────────────────────────────────────────────────────
 // PAGE COMPONENT
 // ────────────────────────────────────────────────────────────────────────────
-export default function BlogPost({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug)
+export default async function BlogPost({ params }) {
+  const { slug } = await params
+  const post = blogPosts.find((p) => p.slug === slug)
   if (!post) notFound()
 
   const baseUrl = 'https://kimpuler.com'
