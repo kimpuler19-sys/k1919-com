@@ -1,4 +1,5 @@
 // app/blog/page.js
+import { Suspense } from 'react'
 import { blogPosts } from './data'
 import BlogList from './BlogList'
 
@@ -63,13 +64,11 @@ export const metadata = {
 // PAGE (Server Component)
 // ────────────────────────────────────────────────────────────────────────────
 export default function BlogIndex() {
-  // Sort newest first
   const sortedPosts = [...blogPosts].sort(
     (a, b) =>
       new Date(b.dateModified || b.date) - new Date(a.dateModified || a.date)
   )
 
-  // Aggregate all unique tags with counts
   const tagCounts = sortedPosts.reduce((acc, post) => {
     post.tags.forEach((tag) => {
       acc[tag] = (acc[tag] || 0) + 1
@@ -140,13 +139,50 @@ export default function BlogIndex() {
     ],
   }
 
-  return (
+  return return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
-      <BlogList posts={sortedPosts} tags={tags} />
+      <Suspense fallback={<BlogSkeleton />}>
+        <BlogList posts={sortedPosts} tags={tags} />
+      </Suspense>
     </>
+  )
+}
+
+// Fallback skeleton — juga berperan sebagai static shell untuk SEO
+function BlogSkeleton() {
+  return (
+    <div className="min-h-screen bg-[#020617] text-slate-200 font-sans">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <nav className="flex justify-between items-center mb-16 border-b border-white/5 pb-8 font-mono">
+          <span className="text-3xl font-black tracking-tighter text-white uppercase italic underline decoration-purple-500 decoration-4 underline-offset-8">
+            KIMPULER
+          </span>
+        </nav>
+        <header className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+            Insights & Articles
+          </h1>
+          <p className="text-xl text-slate-400 max-w-3xl leading-relaxed">
+            Deep dives on crypto programming, private AI infrastructure,
+            enterprise automation, and the engineering decisions that separate
+            production systems from prototypes.
+          </p>
+        </header>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="bg-slate-900/30 p-8 rounded-3xl border border-white/5 h-64 animate-pulse"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    
   )
 }
