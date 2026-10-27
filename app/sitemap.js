@@ -12,6 +12,7 @@ export default async function sitemap() {
     '/how-it-works',
     '/faq',
     '/blog',
+    
     '/contact',
     '/rewards',
     '/terms',
