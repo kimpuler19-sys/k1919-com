@@ -1,44 +1,9 @@
 // app/blog/BlogList.js
 'use client'
 
-import { useState, useMemo, Suspense } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-// ────────────────────────────────────────────────────────────────────────────
-// LEAF: Hanya komponen ini yang memakai useSearchParams
-// ────────────────────────────────────────────────────────────────────────────
-function BlogListInner({ posts, tags }) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const initialTag = searchParams.get('tag') || 'All'
-
-  const [activeTag, setActiveTag] = useState(initialTag)
-  const [query, setQuery] = useState('')
-
-  const filtered = useMemo(() => {
-    return posts.filter((post) => {
-      const matchesTag = activeTag === 'All' || post.tags.includes(activeTag)
-      const matchesQuery =
-        query.trim() === '' ||
-        post.title.toLowerCase().includes(query.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-        post.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()))
-      return matchesTag && matchesQuery
-    })
-  }, [posts, activeTag, query])
-
-  const featured = activeTag === 'All' && query === '' ? posts[0] : null
-  const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered
-
-  const handleTagClick = (tagName) => {
-    setActiveTag(tagName)
-    if (tagName === 'All') {
-      router.push('/blog', { scroll: false })
-    } else {
-      router.push(`/blog?tag=${encodeURIComponent(tagName)}`, { scroll: false })
-    }
-  }
 
 export default function BlogList({ posts, tags }) {
   const router = useRouter()

@@ -139,7 +139,7 @@ export default function BlogIndex() {
     ],
   }
 
-  return return (
+  return (
     <>
       <script
         type="application/ld+json"
